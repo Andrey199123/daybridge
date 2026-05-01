@@ -1,0 +1,457 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DayBridge accessible care-board CSS variables */
+:root {
+  --bg-space-900: oklch(21% 0.035 145);
+  --bg-space-800: oklch(27% 0.045 145);
+  --bg-space-700: oklch(34% 0.055 145);
+  --bg-space-600: oklch(42% 0.065 145);
+  --accent-cyan: oklch(72% 0.12 82);
+  --accent-violet: oklch(64% 0.1 153);
+  --star: oklch(97% 0.018 116);
+  --propulsion: oklch(68% 0.16 55);
+  --success: oklch(64% 0.14 153);
+  --warning: oklch(78% 0.13 82);
+  --danger: oklch(58% 0.17 25);
+  
+  --card-bg: oklch(25% 0.04 145);
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Date input styling - let browser handle format naturally */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+:root {
+  --input-bg: #0D1B3D;
+  
+  --category-academic: #1FA2FF;
+  --category-career: #00D4FF;
+  --category-creative: #8A7CFF;
+  --category-entrepreneurial: #FFA735;
+  --category-personal-growth: #FF4FD8;
+}
+
+body {
+  background: var(--bg-space-900);
+  color: var(--star);
+  font-family: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  overflow-x: hidden;
+  font-feature-settings: "cv11" 1, "ss01" 1;
+}
+
+.arc-display {
+  font-family: "Besley", "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.arc-kicker {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.arc-copy {
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.glass-panel {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.glow-gradient {
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-cyan));
+}
+
+/* Arc Primary Gradient - matches avatar ring and A.R.C. chat bubble */
+.arc-primary-gradient {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  box-shadow: 0 8px 24px rgba(0, 224, 255, 0.25), 0 4px 12px rgba(108, 99, 255, 0.2);
+  transition: all 0.2s ease-out;
+}
+
+.arc-primary-gradient:hover {
+  background: linear-gradient(135deg, #1AEBFF, #7D75FF);
+  box-shadow: 0 12px 32px rgba(0, 224, 255, 0.35), 0 6px 16px rgba(108, 99, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.arc-primary-gradient:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 12px rgba(0, 224, 255, 0.3), 0 2px 8px rgba(108, 99, 255, 0.25);
+}
+
+.arc-primary-gradient:focus-visible {
+  outline: 2px solid rgba(0, 224, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* Legacy orange gradient - deprecated */
+.cta-gradient {
+  background: linear-gradient(90deg, #FF8A00, #FF4D00);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* A.R.C. Orb clean pulse animation */
+@keyframes arc-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+.arc-pulse-ring {
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: arc-pulse 1.8s ease-in-out infinite;
+}
+
+.arc-orb-button {
+  overflow: visible;
+}
+
+/* Mini Timeline tile hover effects */
+@keyframes tile-hover-glow {
+  0%, 100% {
+    box-shadow: 
+      0 8px 24px rgba(0, 224, 255, 0.2),
+      0 4px 12px rgba(108, 99, 255, 0.15),
+      0 0 0 1px rgba(0, 224, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 12px 32px rgba(0, 224, 255, 0.25),
+      0 6px 16px rgba(108, 99, 255, 0.2),
+      0 0 0 1px rgba(0, 224, 255, 0.15);
+  }
+}
+
+/* Z-index layering system */
+:root {
+  --z-base: 0;
+  --z-content: 10;
+  --z-sidebar: 40;
+  --z-header: 50;
+  --z-dropdown: 60;
+  --z-overlay: 70;
+  --z-modal: 80;
+  --z-toast: 90;
+  --z-tooltip: 100;
+}
+
+/* Ensure header stays above content but below modals */
+header.sticky {
+  z-index: var(--z-header);
+}
+
+/* Sidebar should be below header */
+aside.sticky {
+  z-index: var(--z-sidebar);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* For ARC orb, show static glow instead of pulse */
+  .arc-pulse-ring {
+    animation: none !important;
+    transform: scale(1.06);
+    opacity: 0.3;
+  }
+}
+
+/* Galaxy UI specific styles */
+.galaxy-dashboard {
+  --motion-reduce: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-dashboard {
+    --motion-reduce: 1;
+  }
+}
+
+/* Custom animations for galaxy effects */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+}
+
+/* Apply animations only when motion is not reduced */
+.galaxy-dashboard:not([style*="--motion-reduce: 1"]) .twinkle {
+  animation: twinkle 2s infinite;
+}
+
+.galaxy-dashboard:not([style*="--motion-reduce: 1"]) .float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.galaxy-dashboard:not([style*="--motion-reduce: 1"]) .pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+
+  /* Custom scrollbar for profile modal */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--bg-space-900);
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet));
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #1AEBFF, #7D75FF);
+  }
+}
+
+/* react-big-calendar dark mode styles */
+.dark .rbc-calendar {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.dark .rbc-toolbar {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.dark .rbc-toolbar button {
+  color: hsl(var(--foreground));
+  background-color: transparent;
+  border: 1px solid hsl(var(--border));
+}
+
+.dark .rbc-toolbar button:hover,
+.dark .rbc-toolbar button:focus {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.dark .rbc-toolbar button.rbc-active {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-color: hsl(var(--primary));
+}
+
+.dark .rbc-toolbar button.rbc-active:hover,
+.dark .rbc-toolbar button.rbc-active:focus {
+  background-color: hsl(var(--primary) / 0.8);
+  color: hsl(var(--primary-foreground));
+}
+
+.dark .rbc-month-view,
+.dark .rbc-time-view,
+.dark .rbc-agenda-view {
+  border-color: hsl(var(--border));
+}
+
+.dark .rbc-header {
+  border-bottom-color: hsl(var(--border));
+}
+
+.dark .rbc-day-bg {
+  border-left-color: hsl(var(--border));
+}
+
+.dark .rbc-event {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.dark .rbc-off-range-bg {
+  background-color: hsl(var(--muted));
+}
+
+.dark .rbc-now {
+  background-color: hsl(var(--secondary)); /* A slightly different background for the current day */
+}
+
+.dark .rbc-today {
+  background-color: hsl(var(--accent)); /* A distinct background for the selected day */
+}
+
+/* Additional dark mode styles for calendar dropdowns and menus */
+.dark .rbc-toolbar .rbc-btn-group {
+  background-color: transparent;
+}
+
+.dark .rbc-toolbar .rbc-btn-group button {
+  color: hsl(var(--foreground));
+  background-color: transparent;
+  border: 1px solid hsl(var(--border));
+  margin: 0 2px;
+}
+
+.dark .rbc-toolbar .rbc-btn-group button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.dark .rbc-toolbar .rbc-btn-group button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.dark .rbc-toolbar .rbc-btn-group button:not(:first-child):not(:last-child) {
+  border-radius: 0;
+  border-left: none;
+}
+
+/* Ensure text is always visible in dark mode */
+.dark .rbc-toolbar button,
+.dark .rbc-toolbar .rbc-btn-group button {
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark .rbc-toolbar button.rbc-active,
+.dark .rbc-toolbar .rbc-btn-group button.rbc-active {
+  color: hsl(var(--primary-foreground)) !important;
+}
+/* Radial gradient utility for galaxy nebula clouds */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Gentle star twinkle - no position changes */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Gentle floating for particles - very slow drift */
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -10px);
+  }
+}

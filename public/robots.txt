@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /dashboard
+Disallow: /missions
+Disallow: /mini-arcs
+Disallow: /timeline
+Disallow: /achievements
+Disallow: /skills
+Disallow: /resume
+Disallow: /connect
+Disallow: /shop
+Disallow: /leaderboard
+Disallow: /goal/
+Disallow: /profile/
+Disallow: /settings
+Disallow: /email-tracking
+
+Sitemap: https://daybridge.app/sitemap.xml
