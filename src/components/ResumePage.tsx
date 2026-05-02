@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   FileText, Download, Eye, Edit3, Save, Plus, Trash2, 
   ClipboardList, MapPin, Award, Sparkles, ChevronDown,
-  Check, X, Loader2
+  Check, X, Loader2, Briefcase
 } from "lucide-react";
 import { toast } from "sonner";
 

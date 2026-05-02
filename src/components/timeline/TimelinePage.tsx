@@ -41,7 +41,11 @@ export function TimelinePage() {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     params.set('view', viewMode);
-    params.set('date', currentDate.toISOString());
+    // Format date as YYYY-MM-DD instead of ISO string
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    params.set('date', `${year}-${month}-${day}`);
     
     if (selectedCategories.size > 0) {
       params.set('categories', Array.from(selectedCategories).join(','));
