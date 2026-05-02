@@ -43,6 +43,7 @@ npm run dev
 ```
 
 For the full backend, add the required Convex and auth environment variables. See `.env.example` for the expected keys.
+`.env.example` is prefilled for the DayBridge Convex deployment (`amicable-rabbit-184`); copy it to `.env.local` for local dev.
 
 ## Build
 
