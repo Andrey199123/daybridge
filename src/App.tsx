@@ -215,8 +215,8 @@ export function AppShell() {
         }}
       />
       <RoutedAppContent />
-      {import.meta.env.PROD ? <Analytics /> : null}
-      {import.meta.env.PROD ? <SpeedInsights /> : null}
+      <Analytics mode={import.meta.env.PROD ? "production" : "development"} />
+      <SpeedInsights />
     </div>
   );
 }
