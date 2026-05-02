@@ -1024,25 +1024,25 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-3 bg-[#FFA735]/10 border border-[#FFA735]/30 rounded-lg backdrop-blur-sm"
+            className="p-4 bg-[oklch(93%_0.055_95)] border border-[oklch(72%_0.08_75)] rounded-[12px]"
           >
-            <div className="flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-[#FFA735] flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-white/90">
-                <strong className="text-[#FFA735]">Heads up:</strong> {titleError.message}
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-[oklch(45%_0.12_75)] flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-[oklch(28%_0.045_145)]">
+                <strong className="font-bold text-[oklch(35%_0.08_75)]">Heads up:</strong> {titleError.message}
               </div>
             </div>
           </motion.div>
         )}
 
-            <div>
-          <Label htmlFor="goal-name" className="text-xs uppercase tracking-wider text-[#00E0FF]/70 font-medium mb-3 block">
+        <div>
+          <Label htmlFor="goal-name" className="text-sm font-bold text-[oklch(28%_0.045_145)] mb-2 block">
             What does this person need help remembering or doing?
           </Label>
-              <Input
+          <Input
             id="goal-name"
             placeholder="e.g., Prepare for a doctor visit, keep the morning routine on track..."
-                value={formData.name}
+            value={formData.name}
             onChange={(e) => {
               setFormData(prev => ({ ...prev, name: e.target.value }));
               // Clear title error on change
@@ -1052,14 +1052,14 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               }
             }}
             autoComplete="off"
-            className={`bg-[#0D1B3D] border-white/20 text-white placeholder:text-gray-400 focus:border-[#00E0FF] focus:ring-[#00E0FF]/20 ${
-              titleError ? "border-[#FFA735]/50" : ""
+            className={`bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] placeholder:text-[oklch(62%_0.025_145)] focus:border-[oklch(40%_0.1_153)] focus:ring-2 focus:ring-[oklch(40%_0.1_153)]/20 rounded-[8px] ${
+              titleError ? "border-[oklch(55%_0.15_25)]" : ""
             }`}
-              />
-            </div>
+          />
+        </div>
 
-            <div>
-          <Label htmlFor="goal-description" className="text-xs uppercase tracking-wider text-[#00E0FF]/70 font-medium mb-3 block">
+        <div>
+          <Label htmlFor="goal-description" className="text-sm font-bold text-[oklch(28%_0.045_145)] mb-2 block">
             Helpful context (optional)
           </Label>
           <Textarea
@@ -1075,17 +1075,17 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               }
             }}
             autoComplete="off"
-            className="bg-[#0D1B3D] border-white/20 text-white placeholder:text-gray-400 focus:border-[#00E0FF] focus:ring-[#00E0FF]/20 min-h-[80px]"
+            className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] placeholder:text-[oklch(62%_0.025_145)] focus:border-[oklch(40%_0.1_153)] focus:ring-2 focus:ring-[oklch(40%_0.1_153)]/20 rounded-[8px] min-h-[100px]"
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="category" className="text-xs uppercase tracking-wider text-[#00E0FF]/70 font-medium mb-3 block">
+            <Label htmlFor="category" className="text-sm font-bold text-[oklch(28%_0.045_145)] mb-2 block">
               Category
             </Label>
-              <Select
-                value={formData.category}
+            <Select
+              value={formData.category}
               onValueChange={(val) => {
                 setFormData(prev => ({ ...prev, category: val }));
                 // Clear category error on selection
@@ -1094,87 +1094,87 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
             >
               <SelectTrigger 
                 id="category" 
-                className={`bg-[#0D1B3D] border-white/20 text-white focus:border-[#00E0FF] focus:ring-[#00E0FF]/20 ${
-                  categoryError ? "border-[#FF4D4F]/50" : ""
+                className={`bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] focus:border-[oklch(40%_0.1_153)] focus:ring-2 focus:ring-[oklch(40%_0.1_153)]/20 rounded-[8px] ${
+                  categoryError ? "border-[oklch(55%_0.15_25)]" : ""
                 }`}
               >
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-              <SelectContent className="bg-[#0D1B3D] border-white/20 text-white z-[100]">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] rounded-[8px]">
                 {CATEGORY_UI.map(cat => (
-                  <SelectItem key={cat.value} value={cat.value}>
+                  <SelectItem key={cat.value} value={cat.value} className="focus:bg-[oklch(94%_0.035_116)]">
                     {cat.label}
                   </SelectItem>
                 ))}
-                </SelectContent>
-              </Select>
+              </SelectContent>
+            </Select>
             {categoryError && (
-              <p className="mt-1.5 text-xs text-[#FF4D4F]">{categoryError.message}</p>
+              <p className="mt-2 text-sm text-[oklch(55%_0.15_25)]">{categoryError.message}</p>
             )}
-            </div>
+          </div>
 
-            <div>
-            <Label htmlFor="priority" className="text-xs uppercase tracking-wider text-[#00E0FF]/70 font-medium mb-3 block">
+          <div>
+            <Label htmlFor="priority" className="text-sm font-bold text-[oklch(28%_0.045_145)] mb-2 block">
               Priority
             </Label>
-              <Select
-                value={formData.priority}
+            <Select
+              value={formData.priority}
               onValueChange={(val) => setFormData(prev => ({ ...prev, priority: val }))}
-              >
+            >
               <SelectTrigger 
                 id="priority" 
-                className="bg-[#0D1B3D] border-white/20 text-white focus:border-[#00E0FF] focus:ring-[#00E0FF]/20"
+                className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] focus:border-[oklch(40%_0.1_153)] focus:ring-2 focus:ring-[oklch(40%_0.1_153)]/20 rounded-[8px]"
               >
-                  <SelectValue />
-                </SelectTrigger>
-              <SelectContent className="bg-[#0D1B3D] border-white/20 text-white z-[100]">
-                <SelectItem value="low">Low</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="critical">Urgent</SelectItem>
-                </SelectContent>
-              </Select>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] rounded-[8px]">
+                <SelectItem value="low" className="focus:bg-[oklch(94%_0.035_116)]">Low</SelectItem>
+                <SelectItem value="medium" className="focus:bg-[oklch(94%_0.035_116)]">Medium</SelectItem>
+                <SelectItem value="high" className="focus:bg-[oklch(94%_0.035_116)]">High</SelectItem>
+                <SelectItem value="critical" className="focus:bg-[oklch(94%_0.035_116)]">Urgent</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-            </div>
+        </div>
 
-            <div>
-            <Label htmlFor="deadline" className="text-xs uppercase tracking-wider text-[#00E0FF]/70 font-medium mb-3 block">
-              Target deadline *
-            </Label>
-            <SimpleDateInput
-              id="deadline"
-              value={formData.deadline}
-              onChange={(value) => {
-                setFormData(prev => ({ ...prev, deadline: value }));
-                // Clear deadline error on change
-                setValidationErrors(prev => prev.filter(e => e.field !== "deadline"));
-              }}
-              placeholder="MM/DD/YYYY"
-              className={`w-full px-3 py-2 bg-[#0D1B3D] border text-white focus:border-[#00E0FF] focus:ring-[#00E0FF]/20 rounded-md outline-none transition-all ${
-                validationErrors.find(e => e.field === "deadline") ? "border-[#FF4D4F]/50" : "border-white/20"
-              }`}
-            />
-            {validationErrors.find(e => e.field === "deadline") && (
-              <p className="mt-1.5 text-xs text-[#FF4D4F]">
-                {validationErrors.find(e => e.field === "deadline")?.message}
-              </p>
-            )}
-            </div>
+        <div>
+          <Label htmlFor="deadline" className="text-sm font-bold text-[oklch(28%_0.045_145)] mb-2 block">
+            Target deadline *
+          </Label>
+          <SimpleDateInput
+            id="deadline"
+            value={formData.deadline}
+            onChange={(value) => {
+              setFormData(prev => ({ ...prev, deadline: value }));
+              // Clear deadline error on change
+              setValidationErrors(prev => prev.filter(e => e.field !== "deadline"));
+            }}
+            placeholder="MM/DD/YYYY"
+            className={`w-full px-4 py-3 bg-white border text-[oklch(22%_0.035_145)] focus:border-[oklch(40%_0.1_153)] focus:ring-2 focus:ring-[oklch(40%_0.1_153)]/20 rounded-[8px] outline-none transition-all ${
+              validationErrors.find(e => e.field === "deadline") ? "border-[oklch(55%_0.15_25)]" : "border-[oklch(84%_0.03_116)]"
+            }`}
+          />
+          {validationErrors.find(e => e.field === "deadline") && (
+            <p className="mt-2 text-sm text-[oklch(55%_0.15_25)]">
+              {validationErrors.find(e => e.field === "deadline")?.message}
+            </p>
+          )}
+        </div>
 
-        <div className="flex justify-end gap-3 pt-5 border-t border-white/10">
-            <Button
+        <div className="flex justify-end gap-3 pt-6 border-t border-[oklch(86%_0.03_116)]">
+          <Button
             variant="outline" 
             onClick={onClose}
-            className="border-white/20 text-gray-300 hover:bg-white/5 hover:text-white"
+            className="border-[oklch(78%_0.032_116)] bg-[oklch(99%_0.008_116)] text-[oklch(25%_0.045_145)] hover:border-[oklch(57%_0.08_153)] hover:bg-white rounded-[12px] font-bold"
           >
             Cancel
           </Button>
           <Button
             onClick={handleStartChat}
             disabled={!formData.name.trim()}
-            className="arc-primary-gradient text-white font-semibold border-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+            className="border border-[oklch(45%_0.09_153)] bg-[oklch(40%_0.1_153)] text-white font-bold hover:bg-[oklch(34%_0.105_153)] disabled:opacity-50 disabled:cursor-not-allowed rounded-[12px] shadow-[0_4px_12px_rgba(28,92,61,0.15)]"
           >
-                  <Sparkles className="w-4 h-4 mr-2" />
+            <Sparkles className="w-4 h-4 mr-2" />
             Start Care Plan Chat
           </Button>
         </div>
@@ -1704,9 +1704,9 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl bg-[#142850] border border-[#00E0FF]/20 text-white shadow-2xl">
-        <DialogHeader className="pb-4 border-b border-white/10">
-          <DialogTitle className="text-2xl font-bold text-white">
+      <DialogContent className="max-w-5xl bg-white border border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] shadow-[0_28px_70px_rgba(24,42,31,0.16)] rounded-[16px]">
+        <DialogHeader className="pb-4 border-b border-[oklch(86%_0.03_116)]">
+          <DialogTitle className="text-2xl font-black text-[oklch(22%_0.035_145)]">
             {step === "initial" && "Add Care Plan"}
             {step === "chat" && "Care Plan Chat with DayBridge"}
             {step === "confirm" && "Confirm Your Care Plan"}
