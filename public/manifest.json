@@ -1,0 +1,22 @@
+{
+  "name": "DayBridge",
+  "short_name": "DayBridge",
+  "description": "A senior-friendly daily support planner.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/coin-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/coin.png",
+      "sizes": "768x768",
+      "type": "image/png"
+    }
+  ]
+}
+
