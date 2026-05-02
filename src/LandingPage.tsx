@@ -308,7 +308,7 @@ export function LandingPage() {
         return;
       }
 
-      navigate(`/auth?utm_source=landing&utm_medium=${placement}&utm_campaign=grizzly_hacks`);
+      navigate(`/auth?utm_source=landing&utm_medium=${placement}&utm_campaign=daybridge_launch`);
     },
     [landingActions, navigate],
   );
@@ -320,7 +320,7 @@ export function LandingPage() {
         return;
       }
 
-      navigate(`/auth?utm_source=landing&utm_medium=${placement}&utm_campaign=grizzly_hacks`);
+      navigate(`/auth?utm_source=landing&utm_medium=${placement}&utm_campaign=daybridge_launch`);
     },
     [landingActions, navigate],
   );
@@ -368,8 +368,8 @@ export function LandingPage() {
             <a className="hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none" href="#daily-life">
               Daily life
             </a>
-            <a className="hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none" href="#hackathon-fit">
-              Prompt fit
+            <a className="hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none" href="#how-it-works">
+              How it works
             </a>
             <a className="hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none" href="#safety">
               Safety
@@ -472,12 +472,12 @@ export function LandingPage() {
         </section>
 
         <section
-          id="hackathon-fit"
+          id="how-it-works"
           className="mx-auto max-w-7xl px-5 py-16 lg:px-8"
         >
           <div className="max-w-3xl">
             <p className="text-base font-bold text-[oklch(36%_0.085_153)]">
-              Grizzly Hacks III prompt fit
+              Understanding the need
             </p>
             <h2 className="mt-3 text-4xl font-black leading-tight tracking-normal text-[oklch(22%_0.035_145)] md:text-5xl">
               Built for a daily life very different from ours.
@@ -545,7 +545,7 @@ export function LandingPage() {
           <div className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-[12px] border border-[oklch(84%_0.03_116)] bg-white p-7">
               <p className="text-base font-bold text-[oklch(36%_0.085_153)]">
-                Questions judges may ask
+                Common questions
               </p>
               <div className="mt-6 grid gap-4">
                 {faqItems.map((item) => (

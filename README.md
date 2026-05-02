@@ -1,16 +1,14 @@
 # DayBridge
 
-DayBridge is a senior-friendly daily support planner built for Grizzly Hacks III.
+DayBridge is a senior-friendly daily support planner that helps older adults living independently manage their daily routines alongside their care circles.
 
-It adapts the original Arc planning engine into a tool for older adults living independently and the care circles around them. The goal is simple: make the day easier to understand, easier to follow, and easier to support without taking independence away.
+It adapts a powerful AI planning engine into a tool designed specifically for seniors and their families. The goal is simple: make the day easier to understand, easier to follow, and easier to support without taking independence away.
 
-## Grizzly Hacks III Prompt Fit
+## The Problem
 
-**Prompt:** Build something for a group of people whose daily life looks very different from yours.
+**Who we're designing for:** Older adults who live independently, especially seniors who juggle medication routines, rides, doctor visits, errands, meals, paperwork, and family check-ins.
 
-**Who we are designing for:** Older adults who live independently, especially seniors who juggle medication routines, rides, doctor visits, errands, meals, paperwork, and family check-ins.
-
-**Specific problem:** Daily support is scattered across sticky notes, memory, phone calls, text threads, calendars, and medical portals. A senior may remember the appointment but forget the insurance card, remember the medication but forget the refill, or hesitate to ask for help because it feels like bothering someone.
+**The challenge:** Daily support is scattered across sticky notes, memory, phone calls, text threads, calendars, and medical portals. A senior may remember the appointment but forget the insurance card, remember the medication but forget the refill, or hesitate to ask for help because it feels like bothering someone.
 
 **Why this matters:** Small misses can threaten confidence, independence, and family peace of mind. Most productivity tools are built for younger workers and assume fast typing, tiny screens, solo use, and abstract task labels.
 
@@ -51,13 +49,13 @@ For the full backend, add the required Convex and auth environment variables. Se
 npm run build
 ```
 
-## Hackathon Notes
+## Design Philosophy
 
-DayBridge keeps the strongest part of Arc, its planning engine, but changes the audience and product purpose:
+DayBridge focuses on day-to-day usefulness rather than flashy complexity:
 
 - From student goals to senior daily independence
 - From missions to care plans
 - From gamified progress to practical routine clarity
 - From solo productivity to shared support
 
-The prototype is intentionally focused on day-to-day usefulness rather than flashy complexity.
+The interface is intentionally calm, accessible, and focused on what matters most: helping seniors maintain their independence with dignity.
