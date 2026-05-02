@@ -1,10 +1,10 @@
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { api } from "../convex/_generated/api";
-import { ArcMark } from "./components/ArcMark";
 import { ProcessTimeline } from "./components/marketing/ProcessTimeline";
+import { AuthSplitShell } from "./components/auth/AuthSplitShell";
 import { SignInForm } from "./SignInForm";
 import {
   clearAuthIntent,
@@ -179,8 +179,8 @@ export function AuthPage() {
       return (
         <Suspense
           fallback={
-            <div className="flex min-h-screen items-center justify-center bg-[#06111d]">
-              <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-[#6ea8ff]" />
+            <div className="flex min-h-screen items-center justify-center bg-[oklch(97%_0.018_116)]">
+              <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-[oklch(40%_0.1_153)]" />
             </div>
           }
         >
@@ -197,30 +197,34 @@ export function AuthPage() {
 
     if (!isGuestUpgrade) {
       return (
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="mb-4 text-4xl font-bold text-white">
-                Welcome back!
-              </h1>
-              <p className="mb-6 text-lg text-slate-300">
-                You have an incomplete profile setup. Would you like to continue?
+        <div className="min-h-screen bg-[oklch(97%_0.018_116)] text-[oklch(22%_0.035_145)]">
+          <div className="mx-auto max-w-xl px-6 py-16">
+            <div className="rounded-[18px] border border-[oklch(85%_0.032_116)] bg-white/90 p-8 shadow-[0_28px_70px_rgba(24,42,31,0.14)] backdrop-blur">
+              <p className="text-base font-bold text-[oklch(35%_0.085_153)]">
+                Welcome back
               </p>
-              <div className="space-y-3">
+              <h1 className="mt-4 text-4xl font-black leading-tight text-[oklch(21%_0.035_145)]">
+                Finish setting up DayBridge
+              </h1>
+              <p className="mt-4 text-lg leading-8 text-[oklch(40%_0.04_145)]">
+                You started onboarding but did not finish. Want to continue where you left off?
+              </p>
+
+              <div className="mt-8 grid gap-3">
                 <button
                   onClick={() => setShowOnboarding(true)}
-                  className="w-full rounded-[14px] border border-[#6b9fff] bg-[#4f86f7] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#6394ff]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-[12px] border border-[oklch(45%_0.09_153)] bg-[oklch(40%_0.1_153)] px-6 py-4 text-base font-bold text-white transition-colors hover:bg-[oklch(34%_0.105_153)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)] focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(97%_0.018_116)]"
                 >
-                  Continue Setup
+                  Continue setup
                 </button>
                 <button
                   onClick={() => {
                     writeSessionStorage("skipOnboarding", "true");
                     navigate("/dashboard", { replace: true });
                   }}
-                  className="w-full rounded-[14px] border border-[#29476f] bg-[#0d1a2c] px-6 py-3 font-semibold text-slate-200 transition-colors hover:bg-[#13223a]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-[12px] border border-[oklch(78%_0.032_116)] bg-[oklch(99%_0.008_116)] px-6 py-4 text-base font-bold text-[oklch(25%_0.045_145)] transition-[border-color,background-color] hover:border-[oklch(57%_0.08_153)] hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)] focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(97%_0.018_116)]"
                 >
-                  Skip for Now
+                  Skip for now
                 </button>
               </div>
             </div>
@@ -231,107 +235,67 @@ export function AuthPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#06111d] text-slate-100">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(74,131,255,0.18),transparent_38%),radial-gradient(circle_at_20%_80%,rgba(24,54,104,0.45),transparent_34%)]" />
-      <div
-        className="absolute inset-0 opacity-50"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(122,167,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(122,167,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
+    <AuthSplitShell
+      leftEyebrow={
+        isGuestUpgrade
+          ? "Keep the care plan you just created."
+          : "Create your account first. Build the day inside DayBridge."
+      }
+      leftTitle={
+        isGuestUpgrade
+          ? "Turn this guest session into your real DayBridge account."
+          : "Start your account and get to the first useful day plan."
+      }
+      leftDescription={
+        isGuestUpgrade
+          ? "You already tried DayBridge and created a plan. Create a real account so that plan, your updates, and everything after it stays with you."
+          : "DayBridge is for older adults and care circles who need routines, appointments, reminders, and help requests in one readable place."
+      }
+      leftPanel={
+        <>
+          <p className="text-sm font-bold text-[oklch(35%_0.085_153)]">
+            What happens next
+          </p>
+          <ProcessTimeline items={authSummaryRows} compact className="mt-3" />
+          <p className="mt-6 text-sm leading-7 text-[oklch(43%_0.045_145)]">
+            The goal is to get people to a useful day board quickly, not trap them in setup.
+          </p>
+        </>
+      }
+      leftFooter={
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="inline-flex items-center gap-2 text-base font-bold text-[oklch(37%_0.04_145)] transition-colors hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none focus-visible:text-[oklch(24%_0.06_145)]"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          Back to landing page
+        </button>
+      }
+      rightEyebrow={isGuestUpgrade ? "Keep going" : "Secure access"}
+      rightTitle={isGuestUpgrade ? "Create the real account" : "Welcome to DayBridge"}
+      rightDescription={
+        isGuestUpgrade
+          ? "Use email or Google to keep the care plan you just created, then finish onboarding as a real user."
+          : "Create an account to save care plans, daily tasks, and caregiver updates in one place. Guest access is still there if you just want a quick look."
+      }
+    >
+      <p className="mb-6 text-base leading-8 text-[oklch(40%_0.04_145)]">
+        {isGuestUpgrade
+          ? "Create an account now, then finish onboarding as a real user."
+          : "Create an account to save care plans, daily tasks, and caregiver updates in one place."}
+      </p>
+      <SignInForm
+        onSignUpSuccess={() => {
+          if (isGuestUpgrade) {
+            clearGuestSession();
+            removeSessionStorage("skipOnboarding");
+          }
+          setShowOnboarding(true);
         }}
+        onGuestSuccess={() => undefined}
+        showGuestOption={!isGuestUpgrade}
       />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#10284b] to-transparent opacity-60" />
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-6 py-12 lg:px-8">
-        <div className="grid w-full gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-          <section className="order-2 flex flex-col justify-between lg:order-1">
-            <div className="max-w-2xl">
-              <p className="arc-kicker text-blue-100/72">
-                {isGuestUpgrade
-                  ? "Keep the care plan you just created."
-                  : "Create your account first. Build the day inside DayBridge."}
-              </p>
-
-              <h1 className="arc-display mt-6 max-w-3xl text-[clamp(2.8rem,8vw,4.8rem)] font-bold leading-[0.94] text-white">
-                {isGuestUpgrade
-                  ? "Turn this guest session into your real DayBridge account."
-                  : "Start your account and get to the first useful day plan."}
-              </h1>
-
-              <p className="arc-copy mt-6 max-w-xl text-[1.05rem] leading-8 text-slate-300">
-                {isGuestUpgrade
-                  ? "You already tried DayBridge and created a plan. Now create a real account so that plan, your updates, and everything after it stays with you."
-                  : "DayBridge is for older adults and care circles who need routines, appointments, reminders, and help requests in one readable place."}
-              </p>
-            </div>
-
-            <div className="mt-10 rounded-[22px] border border-[#29476f] bg-[#081423] p-6 shadow-[0_24px_80px_rgba(2,8,18,0.55)]">
-              <p className="text-sm font-medium text-blue-100/70">
-                What happens next
-              </p>
-              <ProcessTimeline items={authSummaryRows} compact className="mt-3" />
-              <p className="mt-6 text-sm leading-7 text-slate-400">
-                The goal is to get people to a useful day board quickly, not trap them in setup.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => navigate("/")}
-              className="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white"
-            >
-              Back to landing page
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </button>
-          </section>
-
-          <aside className="order-1 rounded-[22px] border border-[#29476f] bg-[#091626]/95 p-1 shadow-[0_24px_80px_rgba(2,8,18,0.6)] lg:order-2">
-            <div className="h-full rounded-[20px] border border-white/6 bg-[#0c1a2d]">
-              <div className="border-b border-[#1f3554] px-8 py-8">
-                <div className="flex items-start justify-between gap-6">
-                  <div>
-                    <p className="arc-kicker text-blue-100/70">
-                      {isGuestUpgrade ? "Keep going" : "Secure access"}
-                    </p>
-                    <h2 className="arc-display mt-3 text-[clamp(2.2rem,5vw,3.4rem)] font-bold text-white">
-                      {isGuestUpgrade ? "Create the real account" : "Welcome to DayBridge"}
-                    </h2>
-                    <p className="arc-copy mt-4 max-w-md text-[1rem] leading-7 text-slate-300">
-                      {isGuestUpgrade
-                        ? "Use email or Google to keep the care plan you just created and move into the real account flow."
-                        : "Email and Google are the fastest ways in. Guest access is still there if you just want a quick look."}
-                    </p>
-                  </div>
-
-                  <div className="relative mt-1 hidden h-20 w-20 shrink-0 items-center justify-center rounded-[20px] border border-[#35547c] bg-[#0d1c31] lg:flex">
-                    <ArcMark className="h-10 w-10 text-blue-200" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-8 py-8">
-                <p className="mb-5 text-sm leading-7 text-slate-400">
-                  {isGuestUpgrade
-                    ? "Create an account now, then finish onboarding as a real user."
-                    : "Create an account to save care plans, daily tasks, and caregiver updates in one place."}
-                </p>
-                <SignInForm
-                  onSignUpSuccess={() => {
-                    if (isGuestUpgrade) {
-                      clearGuestSession();
-                      removeSessionStorage("skipOnboarding");
-                    }
-                    setShowOnboarding(true);
-                  }}
-                  onGuestSuccess={() => undefined}
-                  showGuestOption={!isGuestUpgrade}
-                />
-              </div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </div>
+    </AuthSplitShell>
   );
 }

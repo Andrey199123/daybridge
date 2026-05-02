@@ -36,14 +36,14 @@ export function SignInForm({
 
   return (
     <div className="w-full">
-      <div className="mb-6 grid grid-cols-2 gap-2 rounded-[14px] border border-white/8 bg-[#07111f] p-1">
+      <div className="mb-6 grid grid-cols-2 gap-2 rounded-[14px] border border-[oklch(78%_0.032_116)] bg-[oklch(99%_0.008_116)] p-1 shadow-[0_12px_28px_rgba(29,44,35,0.08)]">
         <button
           type="button"
           onClick={() => setFlow("signUp")}
-          className={`rounded-[10px] px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6ea8ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07111f] ${
+          className={`rounded-[10px] px-4 py-3 text-base font-bold transition-[background-color,color] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)] focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(97%_0.018_116)] ${
             !isSignIn
-              ? "bg-[#17345d] text-white"
-              : "text-slate-400 hover:text-slate-200"
+              ? "bg-[oklch(40%_0.1_153)] text-white"
+              : "text-[oklch(37%_0.04_145)] hover:text-[oklch(24%_0.06_145)]"
           }`}
         >
           Create account
@@ -51,10 +51,10 @@ export function SignInForm({
         <button
           type="button"
           onClick={() => setFlow("signIn")}
-          className={`rounded-[10px] px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6ea8ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07111f] ${
+          className={`rounded-[10px] px-4 py-3 text-base font-bold transition-[background-color,color] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)] focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(97%_0.018_116)] ${
             isSignIn
-              ? "bg-[#17345d] text-white"
-              : "text-slate-400 hover:text-slate-200"
+              ? "bg-[oklch(40%_0.1_153)] text-white"
+              : "text-[oklch(37%_0.04_145)] hover:text-[oklch(24%_0.06_145)]"
           }`}
         >
           Sign in
@@ -115,7 +115,7 @@ export function SignInForm({
         }}
       >
         <div className="space-y-2">
-          <label htmlFor="auth-email" className="text-sm font-medium text-slate-400">
+          <label htmlFor="auth-email" className="text-base font-bold text-[oklch(37%_0.04_145)]">
             Email address
           </label>
           <input
@@ -129,7 +129,7 @@ export function SignInForm({
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="auth-password" className="text-sm font-medium text-slate-400">
+          <label htmlFor="auth-password" className="text-base font-bold text-[oklch(37%_0.04_145)]">
             Password
           </label>
           <input
@@ -174,7 +174,7 @@ export function SignInForm({
           </span>
           <button
             type="button"
-            className="cursor-pointer font-medium text-blue-300 transition-colors hover:text-blue-200 focus-visible:outline-none focus-visible:text-blue-200"
+            className="cursor-pointer font-bold text-[oklch(35%_0.085_153)] transition-colors hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none focus-visible:text-[oklch(24%_0.06_145)]"
             onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
           >
             {isSignIn ? "Create account" : "Sign in"}
@@ -182,16 +182,16 @@ export function SignInForm({
         </div>
       </form>
       <div className="my-6 flex items-center justify-center">
-        <hr className="my-4 grow border-white/8" />
-        <span className="mx-4 text-sm font-medium text-slate-500">
+        <hr className="my-4 grow border-[oklch(85%_0.032_116)]" />
+        <span className="mx-4 text-sm font-bold text-[oklch(43%_0.045_145)]">
           Or use
         </span>
-        <hr className="my-4 grow border-white/8" />
+        <hr className="my-4 grow border-[oklch(85%_0.032_116)]" />
       </div>
       <div className="flex flex-col gap-3">
         <button
           type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-[12px] border border-slate-200 bg-slate-50 px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[0_12px_24px_rgba(255,255,255,0.08)] transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_18px_30px_rgba(255,255,255,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c1a2d]"
+          className="flex w-full items-center justify-center gap-3 rounded-[12px] border border-[oklch(78%_0.032_116)] bg-white px-6 py-4 text-base font-bold text-[oklch(22%_0.035_145)] shadow-[0_14px_30px_rgba(29,44,35,0.10)] transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[oklch(57%_0.08_153)] hover:shadow-[0_18px_40px_rgba(29,44,35,0.14)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)] focus-visible:ring-offset-2 focus-visible:ring-offset-[oklch(97%_0.018_116)]"
           disabled={isBusy}
           onClick={() => {
             storeAuthIntent({ flow, method: "google" });
@@ -218,13 +218,13 @@ export function SignInForm({
         </button>
         {showGuestOption ? (
         <div className="pt-1 text-center">
-          <p className="text-xs text-slate-500">
+          <p className="text-sm font-semibold text-[oklch(43%_0.045_145)]">
             Just looking around?
           </p>
           <button
             type="button"
             disabled={isBusy}
-            className="mt-2 text-sm font-medium text-slate-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-2 text-base font-bold text-[oklch(35%_0.085_153)] transition-colors hover:text-[oklch(24%_0.06_145)] focus-visible:outline-none focus-visible:text-[oklch(24%_0.06_145)] disabled:cursor-not-allowed disabled:opacity-60"
             onClick={() => {
               setGuestSubmitting(true);
               clearAuthIntent();
