@@ -58,22 +58,22 @@ export class AppErrorBoundary extends React.Component<
     }
 
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#06111d] px-6 text-slate-100">
-        <div className="w-full max-w-lg rounded-[24px] border border-[#223a5d] bg-[#081423] p-8 text-center shadow-[0_24px_80px_rgba(2,8,18,0.45)]">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[18px] border border-[#35547c] bg-[#0d1c31]">
-            <AlertTriangle className="h-7 w-7 text-blue-200" />
+      <div className="flex min-h-screen items-center justify-center bg-[oklch(97%_0.018_116)] px-6">
+        <div className="w-full max-w-lg rounded-[16px] border border-[oklch(84%_0.03_116)] bg-white p-8 text-center shadow-[0_28px_70px_rgba(24,42,31,0.16)]">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[12px] bg-[oklch(93%_0.055_25)] text-[oklch(45%_0.12_25)]">
+            <AlertTriangle className="h-7 w-7" />
           </div>
-          <h1 className="mt-6 text-3xl font-semibold text-white">
+          <h1 className="mt-6 text-3xl font-black tracking-normal text-[oklch(22%_0.035_145)]">
             Something went wrong
           </h1>
-          <p className="mt-4 text-base leading-7 text-slate-400">
+          <p className="mt-4 text-base leading-7 text-[oklch(42%_0.035_145)]">
             DayBridge hit an unexpected error on this screen. You can reload the page or head back to the landing page.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <button
               type="button"
               onClick={this.handleReload}
-              className="inline-flex items-center justify-center gap-2 rounded-[14px] border border-[#6b9fff] bg-[#4f86f7] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#6394ff]"
+              className="inline-flex items-center justify-center gap-2 rounded-[12px] border border-[oklch(45%_0.09_153)] bg-[oklch(40%_0.1_153)] px-5 py-3 text-base font-bold text-white transition-colors hover:bg-[oklch(34%_0.105_153)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)]"
             >
               <RefreshCw className="h-4 w-4" />
               Reload page
@@ -81,7 +81,7 @@ export class AppErrorBoundary extends React.Component<
             <button
               type="button"
               onClick={this.handleGoHome}
-              className="inline-flex items-center justify-center rounded-[14px] border border-[#29476f] bg-[#0d1a2c] px-5 py-3 text-sm font-medium text-slate-200 transition-colors hover:border-[#3a5d8f] hover:bg-[#13223a]"
+              className="inline-flex items-center justify-center gap-2 rounded-[12px] border border-[oklch(78%_0.032_116)] bg-[oklch(99%_0.008_116)] px-5 py-3 text-base font-bold text-[oklch(25%_0.045_145)] transition-colors hover:border-[oklch(57%_0.08_153)] hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[oklch(76%_0.12_82)]"
             >
               Go to landing page
             </button>
