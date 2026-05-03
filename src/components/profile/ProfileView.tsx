@@ -105,10 +105,10 @@ export function ProfileView({ onClose }: ProfileViewProps) {
   }
 
   const getRankBadge = (xp: number) => {
-    if (xp < 1000) return { label: "Cadet", icon: "🎯", color: "from-blue-500 to-cyan-500" };
-    if (xp < 5000) return { label: "Explorer", icon: "🔭", color: "from-purple-500 to-pink-500" };
+    if (xp < 1000) return { label: "Cadet", icon: "", color: "from-blue-500 to-cyan-500" };
+    if (xp < 5000) return { label: "Explorer", icon: "", color: "from-purple-500 to-pink-500" };
     if (xp < 15000) return { label: "Commander", icon: "⚡", color: "from-orange-500 to-red-500" };
-    return { label: "Architect", icon: "👑", color: "from-yellow-500 to-amber-500" };
+    return { label: "Architect", icon: "", color: "from-yellow-500 to-amber-500" };
   };
 
   const rank = getRankBadge(currentUser.profile?.points || 0);

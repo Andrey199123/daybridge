@@ -189,7 +189,7 @@ export function DateInput({ value, onChange, placeholder = "MM/DD/YYYY", classNa
           onClick={() => setShowCalendar(!showCalendar)}
           className="px-3 py-2 border border-gray-300 bg-gray-50 hover:bg-gray-100 rounded-r-md"
         >
-          📅
+          
         </button>
       </div>
       

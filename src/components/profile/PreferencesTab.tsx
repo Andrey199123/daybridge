@@ -183,7 +183,7 @@ export function PreferencesTab() {
       {/* Info Box */}
       <div className="bg-[var(--bg-space-800)] rounded-xl p-4 border border-white/10">
         <p className="text-[var(--star)]/60 text-sm">
-          💡 <span className="font-semibold text-[var(--star)]">Tip:</span> Your preferences are saved automatically and will apply across all your devices.
+           <span className="font-semibold text-[var(--star)]">Tip:</span> Your preferences are saved automatically and will apply across all your devices.
         </p>
       </div>
     </div>

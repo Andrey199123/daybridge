@@ -168,7 +168,7 @@ export function ActiveCallInterface() {
           
           // Log participants
           const participants = frame.participants();
-          console.log("👥 Participants:", Object.keys(participants).length);
+          console.log(" Participants:", Object.keys(participants).length);
           Object.entries(participants).forEach(([id, p]: [string, any]) => {
             console.log(`  - ${p.local ? 'Local' : 'Remote'}: ${p.user_name || id}, audio: ${p.audio}`);
           });
@@ -176,7 +176,7 @@ export function ActiveCallInterface() {
         });
 
         frame.on("participant-joined", async (event) => {
-          console.log("👤 Participant joined:", event.participant.user_name || event.participant.user_id);
+          console.log(" Participant joined:", event.participant.user_name || event.participant.user_id);
           console.log("   Audio enabled:", event.participant.audio);
           toast.success("Other person joined the call");
           
@@ -190,19 +190,19 @@ export function ActiveCallInterface() {
                 screenAudio: false,
               },
             });
-            console.log("🔊 Subscribed to remote audio");
+            console.log(" Subscribed to remote audio");
           } catch (err) {
             console.error("Failed to subscribe to remote audio:", err);
           }
           
           const participants = frame.participants();
           setParticipantCount(Object.keys(participants).length);
-          console.log("👥 Total participants now:", Object.keys(participants).length);
+          console.log(" Total participants now:", Object.keys(participants).length);
         });
 
         frame.on("participant-updated", (event) => {
           if (!event.participant.local) {
-            console.log("🔄 Remote participant updated:", {
+            console.log(" Remote participant updated:", {
               name: event.participant.user_name || event.participant.user_id,
               audio: event.participant.audio,
               audioTrack: event.participant.tracks?.audio?.state,
@@ -211,7 +211,7 @@ export function ActiveCallInterface() {
         });
 
         frame.on("participant-left", (event) => {
-          console.log("👋 Participant left:", event.participant.user_name || event.participant.user_id);
+          console.log(" Participant left:", event.participant.user_name || event.participant.user_id);
           toast.info("Other person left the call");
           
           // Clean up audio element for this participant
@@ -229,7 +229,7 @@ export function ActiveCallInterface() {
         });
 
         frame.on("left-meeting", () => {
-          console.log("📞 Left meeting");
+          console.log(" Left meeting");
           
           // Clean up all audio elements
           remoteAudioElements.forEach((audioEl) => {
@@ -254,7 +254,7 @@ export function ActiveCallInterface() {
         frame.on("track-started", (event) => {
           const participantType = event.participant?.local ? "local" : "remote";
           const participantName = event.participant?.user_name || event.participant?.user_id || participantType;
-          console.log("🎵 Track started:", event.track.kind, "from", participantName, `(${participantType})`);
+          console.log(" Track started:", event.track.kind, "from", participantName, `(${participantType})`);
           console.log("   Track state:", event.track.readyState, "enabled:", event.track.enabled);
           
           // CRITICAL: Manually play remote audio tracks
@@ -276,7 +276,7 @@ export function ActiveCallInterface() {
             
             audioEl.play()
               .then(() => {
-                console.log("🔊 Playing remote audio successfully");
+                console.log(" Playing remote audio successfully");
                 toast.success("Audio connected!");
               })
               .catch((err) => {
@@ -287,7 +287,7 @@ export function ActiveCallInterface() {
                 const playOnClick = () => {
                   audioEl?.play()
                     .then(() => {
-                      console.log("🔊 Playing remote audio after user interaction");
+                      console.log(" Playing remote audio after user interaction");
                       document.removeEventListener('click', playOnClick);
                     })
                     .catch(console.error);
@@ -299,7 +299,7 @@ export function ActiveCallInterface() {
 
         frame.on("track-stopped", (event) => {
           const participantType = event.participant?.local ? "local" : "remote";
-          console.log("🔇 Track stopped:", event.track.kind, "from", participantType);
+          console.log(" Track stopped:", event.track.kind, "from", participantType);
           
           // Clean up audio element if remote track stops
           if (!event.participant?.local && event.track.kind === "audio") {
@@ -312,7 +312,7 @@ export function ActiveCallInterface() {
           }
         });
 
-        console.log("🔌 Joining Daily.co room...");
+        console.log(" Joining Daily.co room...");
         const joinResult = await frame.join({
           url: activeCall.roomUrl,
           token: activeCall.token,
@@ -358,7 +358,7 @@ export function ActiveCallInterface() {
       const newMutedState = !isMuted;
       callFrame.setLocalAudio(!newMutedState);
       setIsMuted(newMutedState);
-      console.log(`🎤 Microphone ${newMutedState ? 'muted' : 'unmuted'}`);
+      console.log(` Microphone ${newMutedState ? 'muted' : 'unmuted'}`);
       toast.success(newMutedState ? "Microphone muted" : "Microphone unmuted");
     } else {
       setIsMuted(!isMuted);

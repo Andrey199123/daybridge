@@ -93,20 +93,20 @@ export function ResumeModal({ onClose }: ResumeModalProps) {
                 onClick={handleCopy}
                 className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all"
               >
-                📋 Copy to Clipboard
+                 Copy to Clipboard
               </button>
               <button
                 onClick={handleDownload}
                 className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all"
               >
-                💾 Download
+                 Download
               </button>
               <button
                 onClick={handleGenerate}
                 disabled={loading}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50"
               >
-                🔄 Regenerate
+                 Regenerate
               </button>
             </div>
             

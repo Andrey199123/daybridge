@@ -353,11 +353,11 @@ export function AppLayout() {
       >
         <div className="flex items-center justify-around px-2 py-2">
           {([
-            { id: 'missions', label: 'Care Plans', path: '/missions', icon: '📋' },
-            { id: 'timeline', label: 'Calendar', path: '/timeline', icon: '📅' },
-            { id: 'galaxy', label: 'Day Map', path: '/dashboard', icon: '🗺️' },
-            { id: 'connect', label: 'Circle', path: '/connect', icon: '🤝' },
-            { id: 'resume', label: 'Summary', path: '/resume', icon: '📄' },
+            { id: 'missions', label: 'Care Plans', path: '/missions' },
+            { id: 'timeline', label: 'Calendar', path: '/timeline' },
+            { id: 'galaxy', label: 'Day Map', path: '/dashboard' },
+            { id: 'connect', label: 'Circle', path: '/connect' },
+            { id: 'resume', label: 'Summary', path: '/resume' },
           ] as const).map((item) => {
             const isActive = activeNav === item.id;
             return (
@@ -373,8 +373,7 @@ export function AppLayout() {
                     : 'text-white/60 hover:text-white/90 active:bg-white/5'
                 }`}
               >
-                <span className="text-lg leading-none" aria-hidden="true">{item.icon}</span>
-                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-[var(--accent-cyan)]' : 'text-white/60'}`}>
+                <span className={`text-xs font-medium leading-none ${isActive ? 'text-[var(--accent-cyan)]' : 'text-white/60'}`}>
                   {item.label}
                 </span>
               </button>

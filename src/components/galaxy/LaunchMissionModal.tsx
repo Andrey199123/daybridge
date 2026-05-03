@@ -1278,7 +1278,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
           {/* Dev console panel */}
           {import.meta.env.DEV && showDevConsole && (
             <div className="mt-2 p-3 bg-black/60 border border-cyan-500/30 rounded text-[10px] font-mono space-y-1.5">
-              <div className="text-cyan-400 font-bold mb-2">📊 Diagnostics</div>
+              <div className="text-cyan-400 font-bold mb-2"> Diagnostics</div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                 <div className="text-gray-400">State:</div>
                 <div className="text-cyan-300">{requestState.toUpperCase()}</div>
@@ -1308,7 +1308,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               
               {turnHistory.length > 0 && (
                 <div className="pt-2 mt-2 border-t border-gray-700/50">
-                  <div className="text-gray-400 mb-1">🔄 Recent Turns</div>
+                  <div className="text-gray-400 mb-1"> Recent Turns</div>
                   {turnHistory.slice(-3).reverse().map((turn, i) => (
                     <div key={turn.turnId} className="text-gray-500 flex items-center justify-between">
                       <span className="text-gray-400">{turn.turnId.substring(5, 13)}</span>

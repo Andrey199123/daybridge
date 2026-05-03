@@ -109,7 +109,7 @@ export function GoalCompletionCelebration({ goalTitle, xpEarned, onClose }: Goal
             onClick={onClose}
             className="px-8 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-xl hover:from-yellow-600 hover:to-orange-600 transition-all transform hover:scale-105 shadow-lg"
           >
-            Continue 🚀
+            Continue 
           </button>
         </div>
       </div>

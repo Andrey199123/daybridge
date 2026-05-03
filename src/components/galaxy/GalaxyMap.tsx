@@ -307,12 +307,12 @@ function ExperienceMarker({
   const color = categoryColors[experience.category] || "#6B7280";
   
   const iconMap: Record<string, string> = {
-    internship_search: "💼",
-    competition: "🏆",
-    learning: "📚",
-    project: "🚀",
-    networking: "🤝",
-    application: "📝",
+    internship_search: "",
+    competition: "",
+    learning: "",
+    project: "",
+    networking: "",
+    application: "",
   };
   const icon = iconMap[experience.type] || "⭐";
 
@@ -428,7 +428,7 @@ function Nudge({ message, type, onDismiss }: { message: string; type: "info" | "
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           {type === "celebration" ? (
-            <span className="text-lg">🎉</span>
+            <span className="text-lg"></span>
           ) : (
             <Zap className="w-4 h-4 text-[#00E0FF]" />
           )}

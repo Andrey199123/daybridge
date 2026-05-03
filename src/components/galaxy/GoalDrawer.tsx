@@ -449,7 +449,7 @@ export function GoalDrawer({ goalId, isOpen, onClose }: GoalDrawerProps) {
 
               {(!tasks || tasks.length === 0) && (
                 <div className="text-center py-8 text-gray-400">
-                  <div className="text-4xl mb-2">📝</div>
+                  <div className="text-4xl mb-2"></div>
                   <div>No tasks yet</div>
                 </div>
               )}

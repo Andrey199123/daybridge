@@ -367,7 +367,7 @@ export function StreakModal({ isOpen, onClose }: StreakModalProps) {
                 ) : streakStats?.currentStreak && streakStats.currentStreak < 30 ? (
                   `${30 - streakStats.currentStreak} more days to reach a month!`
                 ) : (
-                  "You're unstoppable! Keep it going 🔥"
+                  "You're unstoppable! Keep it going "
                 )}
               </p>
             </div>
