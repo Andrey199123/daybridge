@@ -5,7 +5,10 @@ import "./index.css";
 import App from "./App";
 
 const CHUNK_RELOAD_KEY = "arc-chunk-reload-at";
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string, {
+  // Dev deployments stream backend logs to connected clients; silence them in production builds.
+  logger: import.meta.env.DEV,
+});
 
 if (import.meta.env.PROD && typeof window !== "undefined") {
   window.addEventListener("vite:preloadError", (event) => {

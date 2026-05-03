@@ -60,10 +60,9 @@ function buildHead(html, pathname, metadata) {
       ? metadata.imageUrl
       : withOrigin(metadata.imageUrl.startsWith("/") ? metadata.imageUrl : `/${metadata.imageUrl}`)
     : "https://arcgoalgetter.com/preview.png";
-  const heroImagePreload =
-    pathname === "/"
-      ? '\n    <link rel="preload" as="image" href="/arc-personal-galaxy.png" imagesizes="(max-width: 1024px) 100vw, 52vw" fetchpriority="high" />'
-      : "";
+  // Avoid injecting global <link rel="preload"> tags that can trigger
+  // "preloaded but not used" warnings on routes that don't render the asset.
+  const heroImagePreload = "";
   const schemaScript = metadata.schema
     ? `\n    <script type="application/ld+json" data-arc-schema="true">${escapeJsonForHtml(
         metadata.schema,
