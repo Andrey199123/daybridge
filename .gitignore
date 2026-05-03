@@ -31,3 +31,6 @@ dist-ssr/
 *.swp
 *.swo
 *~
+
+.env.production
+.kiro/
