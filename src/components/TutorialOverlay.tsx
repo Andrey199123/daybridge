@@ -485,7 +485,7 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       removeSessionStorage('tutorialProgress');
       removeSessionStorage('tutorialPaused');
       removeSessionStorage('tutorialActive');
-      toast.success('🎉 Tutorial complete! You\'re ready to conquer your goals!');
+      toast.success('Tutorial complete! Your daily board is ready.');
       onComplete();
     } catch (error) {
       console.error('Failed to mark tutorial as complete:', error);
@@ -639,8 +639,8 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
               {currentStep.description}
             </p>
             
-            {/* Debug info when element not found */}
-            {!spotlightRect && (
+            {/* Debug info only in development */}
+            {!spotlightRect && isDev && (
               <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-yellow-500/20 border border-yellow-500/40 rounded-lg">
                 <p className="text-yellow-400 text-xs">
                   ⚠️ Waiting for element: <code className="bg-black/30 px-1 rounded">{currentStep.targetSelector}</code>

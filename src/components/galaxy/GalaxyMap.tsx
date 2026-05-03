@@ -782,7 +782,7 @@ export function GalaxyMap({
           <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }}>
             <Loader2 className="w-10 h-10 text-[var(--accent-cyan)] mx-auto mb-4" />
           </motion.div>
-          <p className="text-sm text-white/70">Initializing galaxy systems...</p>
+          <p className="text-sm text-white/70">Loading your care plans...</p>
         </div>
       </div>
     );

@@ -1,37 +1,58 @@
 # DayBridge
 
-DayBridge is a senior-friendly daily support planner that helps older adults living independently manage their daily routines alongside their care circles.
+**A senior-friendly daily support planner that helps older adults living independently manage their routines alongside their care circles.**
 
-It adapts a powerful AI planning engine into a tool designed specifically for seniors and their families. The goal is simple: make the day easier to understand, easier to follow, and easier to support without taking independence away.
+🌐 **Live demo:** https://daybridge.app
+
+---
 
 ## The Problem
 
-**Who we're designing for:** Older adults who live independently, especially seniors who juggle medication routines, rides, doctor visits, errands, meals, paperwork, and family check-ins.
+Older adults living independently often juggle medication reminders, doctor visits, transportation, errands, meals, paperwork, and family check-ins across sticky notes, texts, phone calls, and multiple apps. Small misses — forgetting the insurance card before a clinic visit, missing a medication refill, hesitating to ask for help — can threaten independence and confidence.
 
-**The challenge:** Daily support is scattered across sticky notes, memory, phone calls, text threads, calendars, and medical portals. A senior may remember the appointment but forget the insurance card, remember the medication but forget the refill, or hesitate to ask for help because it feels like bothering someone.
+Most productivity tools assume fast typing, small screens, solo use, and abstract task labels. They are not built for this daily reality.
 
-**Why this matters:** Small misses can threaten confidence, independence, and family peace of mind. Most productivity tools are built for younger workers and assume fast typing, tiny screens, solo use, and abstract task labels.
+## How DayBridge Helps
 
-**How DayBridge helps:** DayBridge creates one accessible daily board with large controls, plain-language reminders, AI-assisted care-plan breakdowns, and caregiver-friendly updates. It helps seniors act independently while giving family and helpers enough context to support without hovering.
+DayBridge creates **one accessible daily board** with:
+- **Large controls and plain labels** — designed for seniors, not tech-savvy workers
+- **AI-assisted care plan builder** — converts a care need into practical checkpoints through a guided conversation (powered by Cohere)
+- **Care circle visibility** — family and helpers see what is done, what is next, and where support is needed — without constant calls
+- **Safety boundaries** — DayBridge reminds; it never diagnoses, prescribes, or changes care instructions
 
-## Core Features
+## Key Features
 
-- **Daily Board:** A scannable day plan for medication reminders, appointments, rides, meals, errands, and calls.
-- **AI Care Plan Builder:** Turns a senior's need into smaller checkpoints and daily tasks.
-- **Care Circle Signals:** Helps family members see what is done, what is next, and where help is needed.
-- **Accessible UI:** Larger text, strong contrast, generous hit targets, and plain labels.
-- **Safety Boundaries:** DayBridge can remind someone to follow existing instructions, but it does not diagnose, prescribe, or change medication or treatment plans.
+| Feature | Description |
+|---|---|
+| **Day Map** | Visual solar-system view of active care plans with progress rings |
+| **AI Care Plan Builder** | SMART-goal guided AI chat that turns a care need into tasks |
+| **Calendar & Timeline** | Tasks organized by day, week, and month |
+| **Care Circle** | Match with helpers; share quiet status signals |
+| **Milestones & Streaks** | Track completed plans and daily engagement |
+| **Care Summary** | AI-generated plain-language summary for family and helper handoffs |
+| **Guest Mode** | Try the full app without an account — no friction barrier |
+| **Accessible UI** | Atkinson Hyperlegible font, large hit targets, high contrast, reduced-motion support, full ARIA labels |
+
+## Accessibility-First Design
+
+- Font: [Atkinson Hyperlegible](https://brailleinstitute.org/freefont) — designed specifically for low-vision readers
+- `prefers-reduced-motion` fully supported — all animations disabled when the OS setting is on
+- Focus-visible rings on every interactive element
+- ARIA labels and `aria-current` on navigation
+- Minimum 44px touch targets throughout
+- High-contrast color system built on OKLCH with WCAG AA compliant ratios
 
 ## Tech Stack
 
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS
-- Convex
-- Convex Auth
-- Framer Motion
-- Lucide React
+| Layer | Technology |
+|---|---|
+| Frontend | React 19, TypeScript, Vite |
+| Styling | Tailwind CSS |
+| Backend | Convex (real-time, serverless) |
+| Auth | Convex Auth (email + anonymous guest) |
+| AI | Cohere `command-r-08-2024` via Convex actions |
+| Animation | Framer Motion |
+| Deployment | Vercel |
 
 ## Running Locally
 
@@ -40,8 +61,7 @@ npm install
 npm run dev
 ```
 
-For the full backend, add the required Convex and auth environment variables. See `.env.example` for the expected keys.
-`.env.example` is prefilled for the DayBridge Convex deployment (`amicable-rabbit-184`); copy it to `.env.local` for local dev.
+For the full backend, add the required Convex and auth environment variables. See `.env.example` for expected keys — it is prefilled for the DayBridge Convex deployment (`amicable-rabbit-184`); copy it to `.env.local` for local dev.
 
 ## Build
 
@@ -51,11 +71,11 @@ npm run build
 
 ## Design Philosophy
 
-DayBridge focuses on day-to-day usefulness rather than flashy complexity:
+DayBridge focuses on **day-to-day usefulness** over gamified complexity:
 
-- From student goals to senior daily independence
-- From missions to care plans
-- From gamified progress to practical routine clarity
-- From solo productivity to shared support
+- **Calm, not chaotic** — one daily board, not five dashboards
+- **Shared, not isolated** — care circle visibility without surveillance
+- **Accessible, not dumbed-down** — plain language with full functionality
+- **Safe boundaries** — AI helps with logistics, not medical decisions
 
-The interface is intentionally calm, accessible, and focused on what matters most: helping seniors maintain their independence with dignity.
+The interface is intentionally calm, high-contrast, and focused on what matters most: helping seniors maintain independence with dignity while giving their care circle enough context to help without hovering.

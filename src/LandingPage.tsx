@@ -404,6 +404,7 @@ export function LandingPage() {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <button
+                type="button"
                 onClick={() => void handleTryDayBridgeCta("hero_try_demo")}
                 className={primaryCtaClass}
               >
@@ -570,9 +571,9 @@ export function LandingPage() {
                 Start with today, then make tomorrow easier.
               </h2>
               <p className="mt-5 text-lg leading-8 text-[oklch(91%_0.02_135)]">
-                The prototype keeps the strongest part of Arc: AI-assisted
-                planning. The new purpose is senior independence, daily care
-                clarity, and less friction for families.
+                DayBridge turns a care need into a shared, plain-language
+                plan — with AI-assisted checkpoints, caregiver visibility,
+                and accessibility built in from the start.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <button

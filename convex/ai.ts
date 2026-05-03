@@ -219,16 +219,14 @@ Do not include any other text or formatting.`;
     } catch (error) {
       console.error("Error generating tasks:", error);
       
-      // Fallback: create basic tasks
+      // Fallback: create basic care-appropriate tasks
       const fallbackTasks = [
-        "Research and gather information",
-        "Create a plan or outline",
-        "Start working on the first step",
-        "Complete the main work",
-        "Review and refine your work",
-        "Get feedback from others",
-        "Make final improvements",
-        "Complete and celebrate!"
+        "Write down today's key tasks and reminders",
+        "Check and gather any needed supplies or documents",
+        "Let a family member or helper know the plan",
+        "Complete the main task or appointment",
+        "Check in with care circle when done",
+        "Note anything that needs follow-up tomorrow",
       ];
 
       for (let i = 0; i < fallbackTasks.length; i++) {

@@ -114,8 +114,8 @@ html {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
 }
 
 .animate-pulse-glow {
@@ -437,22 +437,5 @@ aside.sticky {
   background: radial-gradient(circle, var(--tw-gradient-stops));
 }
 
-/* Gentle star twinkle - no position changes */
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
 /* Gentle floating for particles - very slow drift */
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(10px, -10px);
-  }
-}
+/* twinkle and float are defined above - no duplicates needed */
