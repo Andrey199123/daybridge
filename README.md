@@ -1,81 +1,83 @@
 # DayBridge
 
-**A senior-friendly daily support planner that helps older adults living independently manage their routines alongside their care circles.**
+A senior-friendly daily support planner that helps older adults living independently manage their routines alongside their care circles.
 
-🌐 **Live demo:** https://daybridge.app
+🌐 **Live demo:** [https://daybridge.app](https://daybridge.app)
 
 ---
 
-## The Problem
+## Features
 
-Older adults living independently often juggle medication reminders, doctor visits, transportation, errands, meals, paperwork, and family check-ins across sticky notes, texts, phone calls, and multiple apps. Small misses — forgetting the insurance card before a clinic visit, missing a medication refill, hesitating to ask for help — can threaten independence and confidence.
-
-Most productivity tools assume fast typing, small screens, solo use, and abstract task labels. They are not built for this daily reality.
-
-## How DayBridge Helps
-
-DayBridge creates **one accessible daily board** with:
-- **Large controls and plain labels** — designed for seniors, not tech-savvy workers
-- **AI-assisted care plan builder** — converts a care need into practical checkpoints through a guided conversation (powered by Cohere)
-- **Care circle visibility** — family and helpers see what is done, what is next, and where support is needed — without constant calls
-- **Safety boundaries** — DayBridge reminds; it never diagnoses, prescribes, or changes care instructions
-
-## Key Features
-
-| Feature | Description |
+| Category | Details |
 |---|---|
-| **Day Map** | Visual solar-system view of active care plans with progress rings |
-| **AI Care Plan Builder** | SMART-goal guided AI chat that turns a care need into tasks |
-| **Calendar & Timeline** | Tasks organized by day, week, and month |
-| **Care Circle** | Match with helpers; share quiet status signals |
-| **Milestones & Streaks** | Track completed plans and daily engagement |
-| **Care Summary** | AI-generated plain-language summary for family and helper handoffs |
-| **Guest Mode** | Try the full app without an account — no friction barrier |
-| **Accessible UI** | Atkinson Hyperlegible font, large hit targets, high contrast, reduced-motion support, full ARIA labels |
+| **Impact** | Replaces scattered sticky notes with one clear, accessible daily board. Prioritizes dignity and independence for seniors. |
+| **AI Care Plan Builder** | Converts a care need into practical daily steps using a guided SMART-goal conversation (powered by Cohere `command-r-08-2024`). |
+| **Day Map & Timeline** | Visual solar-system view of active care plans alongside a traditional calendar for timeline tracking. |
+| **Care Circle** | Match with family and helpers for shared visibility without surveillance. Includes audio calls. |
+| **Accessibility** | Built with Atkinson Hyperlegible font, `prefers-reduced-motion` support, full ARIA labels, and high contrast OKLCH colors. |
+| **Guest Mode** | Zero-friction onboarding — try the full application without an account, then upgrade when ready. |
 
-## Accessibility-First Design
+---
 
-- Font: [Atkinson Hyperlegible](https://brailleinstitute.org/freefont) — designed specifically for low-vision readers
-- `prefers-reduced-motion` fully supported — all animations disabled when the OS setting is on
-- Focus-visible rings on every interactive element
-- ARIA labels and `aria-current` on navigation
-- Minimum 44px touch targets throughout
-- High-contrast color system built on OKLCH with WCAG AA compliant ratios
+## Project Structure
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, TypeScript, Vite |
-| Styling | Tailwind CSS |
-| Backend | Convex (real-time, serverless) |
-| Auth | Convex Auth (email + anonymous guest) |
-| AI | Cohere `command-r-08-2024` via Convex actions |
-| Animation | Framer Motion |
-| Deployment | Vercel |
-
-## Running Locally
-
-```bash
-npm install
-npm run dev
+```text
+.
+├── src/
+│   ├── components/       # UI Components (GalaxyMap, Dashboard, etc.)
+│   ├── lib/              # Utilities and analytics
+│   ├── services/         # Data hooks for Goals, Tasks, Milestones
+│   └── App.tsx           # React routing and layout wrapper
+├── convex/               # Backend logic
+│   ├── ai.ts             # Cohere integration for SMART goals
+│   ├── users.ts          # Authentication and user profiles
+│   └── schema.ts         # Database schema
+└── index.css             # Tailwind configuration and custom animations
 ```
 
-For the full backend, add the required Convex and auth environment variables. See `.env.example` for expected keys — it is prefilled for the DayBridge Convex deployment (`amicable-rabbit-184`); copy it to `.env.local` for local dev.
+---
 
-## Build
+## Prerequisites
 
-```bash
-npm run build
+```text
+node >= 18
+npm >= 9
 ```
 
-## Design Philosophy
+1. **Convex Backend:** You need a Convex deployment to run the backend.
+2. **Environment Variables:** See `.env.example` for the required keys. 
 
-DayBridge focuses on **day-to-day usefulness** over gamified complexity:
+---
 
-- **Calm, not chaotic** — one daily board, not five dashboards
-- **Shared, not isolated** — care circle visibility without surveillance
-- **Accessible, not dumbed-down** — plain language with full functionality
-- **Safe boundaries** — AI helps with logistics, not medical decisions
+## Building and Running
 
-The interface is intentionally calm, high-contrast, and focused on what matters most: helping seniors maintain independence with dignity while giving their care circle enough context to help without hovering.
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Run locally**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## Judging Criteria Highlights (Grizzly Hacks III)
+
+1. **Impact & Accessibility Value (25%)** — Direct focus on an underserved demographic (seniors). Accessible font choice, large hit targets, and plain language.
+2. **Functionality & Technical Implementation (25%)** — Real-time updates via Convex, sophisticated AI conversation flow with queue system and retries, guest auth flow.
+3. **User Experience & Accessibility-First Design (25%)** — Calm UI defaults to the accessible "Care Plans" list. `prefers-reduced-motion` ensures animations don't trigger nausea.
+4. **Innovation & Creativity (25%)** — Using AI to translate care needs into actionable checklists is a novel application of LLMs beyond simple chat interfaces.
+
+---
+
+## Contributors
+
+This project was worked on by:
+- Andrey Vasilyev
