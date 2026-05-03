@@ -21,7 +21,6 @@ dist-ssr/
 .env.local
 .env.development.local
 .env.test.local
-.env.production.local
 
 # IDE
 .vscode/
@@ -32,5 +31,4 @@ dist-ssr/
 *.swo
 *~
 
-.env.production
 .kiro/
