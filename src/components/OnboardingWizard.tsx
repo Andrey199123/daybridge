@@ -32,6 +32,8 @@ type OnboardingData = {
   name: string;
   interests: string[];
   skills: string[];
+  programs: Program[];
+  awards: Award[];
   grade: string;
   birthday: string;
   city: string;
@@ -60,6 +62,8 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
     name: "",
     interests: [],
     skills: [],
+    programs: [],
+    awards: [],
     grade: "",
     birthday: "",
     city: "",
@@ -83,6 +87,8 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
         name: profile.name || "",
         interests: profile.interests || [],
         skills: profile.skills || [],
+        programs: profile.programs || [],
+        awards: profile.awards || [],
         grade: (typeof profile.grade === "string" ? profile.grade : "") || "",
         birthday: profile.birthday || "",
         city: profile.city || "",
@@ -98,7 +104,7 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
   }, [currentUser]);
 
   // Autosave function (only called on step changes, not data changes)
-  const handleAutoSave = useCallback(async (currentData = data) => {
+  const handleAutoSave = useCallback(async (currentData: OnboardingData = data) => {
     try {
       await saveProgress({
         step: currentStep,
@@ -180,21 +186,9 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
   };
 
   const handleComplete = async () => {
-    // Validation for truly required fields only
+    // Only require a name. Every other step is optional since the UI supports skipping.
     if (!data.name.trim()) {
       toast.error("Please enter your name");
-      return;
-    }
-    if (!data.grade) {
-      toast.error("Please select a daily rhythm");
-      return;
-    }
-    if (!data.city || !data.state) {
-      toast.error("Please enter your home city and state");
-      return;
-    }
-    if (!data.schoolName || !data.schoolCity || !data.schoolState) {
-      toast.error("Please enter care circle information");
       return;
     }
 
@@ -205,13 +199,15 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
         interests: data.interests.length > 0 ? data.interests : undefined,
         motivationLevel: "medium", // Default value since we removed the step
         skills: data.skills.length > 0 ? data.skills : undefined,
-        grade: data.grade,
+        programs: data.programs.length > 0 ? data.programs : undefined,
+        awards: data.awards.length > 0 ? data.awards : undefined,
+        grade: data.grade || undefined,
         birthday: data.birthday || undefined,
-        city: data.city,
-        state: data.state,
-        schoolName: data.schoolName,
-        schoolCity: data.schoolCity,
-        schoolState: data.schoolState,
+        city: data.city || undefined,
+        state: data.state || undefined,
+        schoolName: data.schoolName || undefined,
+        schoolCity: data.schoolCity || undefined,
+        schoolState: data.schoolState || undefined,
         gender: data.gender,
         raceEthnicity: data.raceEthnicity.length > 0 ? data.raceEthnicity : undefined,
       });
@@ -1241,7 +1237,7 @@ function StepGradeBirthday({
 
       <div>
         <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">
-          Daily rhythm *
+          Daily rhythm
         </label>
         <select
           value={data.grade}
@@ -1260,7 +1256,7 @@ function StepGradeBirthday({
 
       <div>
         <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">
-          Birthday *
+          Birthday
         </label>
         <div className="grid grid-cols-3 gap-3">
           <select
@@ -1362,7 +1358,7 @@ function StepHomeLocation({
       <p className="text-[var(--star)]/60">Where do you call home?</p>
 
       <div>
-        <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">City *</label>
+        <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">City</label>
         <input
           type="text"
           value={data.city}
@@ -1374,7 +1370,7 @@ function StepHomeLocation({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">State *</label>
+        <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">State</label>
         <select
           value={data.state}
           onChange={(e) => setData({ ...data, state: e.target.value })}
@@ -1407,7 +1403,7 @@ function StepSchool({
 
       <div>
         <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">
-          Care Circle Name *
+          Care Circle Name
         </label>
         <input
           type="text"
@@ -1421,7 +1417,7 @@ function StepSchool({
 
       <div>
         <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">
-          Care Circle City *
+          Care Circle City
         </label>
         <input
           type="text"
@@ -1435,7 +1431,7 @@ function StepSchool({
 
       <div>
         <label className="block text-sm font-medium text-[var(--star)]/80 mb-2">
-          Care Circle State *
+          Care Circle State
         </label>
         <select
           value={data.schoolState}

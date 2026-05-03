@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ClipboardPlus, Flame, User as UserIcon, Zap, MessageCircle } from "lucide-react";
+import { ClipboardPlus, Flame, User as UserIcon, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProfileMenu, EnhancedProfileModal } from "../profile";
 import { StreakModal } from "../StreakModal";
@@ -39,9 +39,6 @@ export function TopHUD({ user, onLaunchClick }) {
   const [showCalendarExport, setShowCalendarExport] = useState(false);
   const [modalTab, setModalTab] = useState<TabType>("profile");
   const avatarRef = useRef<HTMLDivElement>(null);
-  
-  // Check for active XP multiplier
-  const xpMultiplier = useQuery(api.shop.hasActiveXPMultiplier);
   
   // Get unread message count and latest sender
   const unreadData = useQuery(api.messages.getUnreadCount);
@@ -415,36 +412,6 @@ export function TopHUD({ user, onLaunchClick }) {
 
           {user && (
             <>
-              {xpMultiplier?.active && (
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="relative hidden sm:block"
-                  title={`2x XP active! ${xpMultiplier.expiresAt ? `Expires in ${Math.floor((xpMultiplier.expiresAt - Date.now()) / (1000 * 60))} minutes` : ''}`}
-                >
-                  <Badge variant="outline" className="border-yellow-500/50 text-yellow-400 gap-1.5 flex backdrop-blur-sm bg-yellow-500/10 px-2 md:px-3 py-1.5">
-                    <Zap className="w-3.5 h-3.5 fill-yellow-400" />
-                    <span className="font-medium hidden md:inline">2x XP</span>
-                  </Badge>
-                  <motion.div
-                    className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full"
-                    animate={{ scale: [1, 1.3, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
-                </motion.div>
-              )}
-              
-              <motion.div whileHover={{ scale: 1.05 }}>
-                <button
-                  onClick={() => navigate('/shop')}
-                  className="border border-white/20 text-white/80 gap-1.5 flex backdrop-blur-sm bg-white/5 px-2 md:px-3 py-1.5 rounded-md hover:bg-white/10 transition-colors cursor-pointer items-center flex-shrink-0 whitespace-nowrap"
-                  title="Open support shop"
-                  data-tutorial="coins-button"
-                >
-                  <img src="/coin-64.png" alt="Care points" width={16} height={16} className="w-4 h-4 flex-shrink-0" />
-                  <span className="font-medium text-sm">{user.energy_coins || 0}</span>
-                </button>
-              </motion.div>
-
               {/* Messages Button */}
               <motion.div whileHover={{ scale: 1.05 }} className="relative">
                 <button

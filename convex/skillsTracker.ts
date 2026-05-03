@@ -341,12 +341,6 @@ export const getGalaxyData = query({
       .withIndex("by_user_status", (q) => q.eq("userId", userId).eq("status", "completed"))
       .collect();
 
-    // Get completed mini-arcs
-    const completedMiniArcs = await ctx.db
-      .query("userMiniArcs")
-      .withIndex("by_user_status", (q) => q.eq("userId", userId).eq("status", "completed"))
-      .collect();
-
     // Get streaks for activity data
     const streaks = await ctx.db
       .query("streaks")
@@ -396,12 +390,6 @@ export const getGalaxyData = query({
           title: g.title,
           date: g.completedAt || g._creationTime,
         })),
-        ...completedMiniArcs.map(a => ({
-          id: a._id,
-          type: "miniarc_completed" as const,
-          title: "Mini-Arc Completed",
-          date: a.completedAt || a.startedAt,
-        })),
         ...achievements.map(a => ({
           id: a._id,
           type: "achievement" as const,
@@ -411,7 +399,6 @@ export const getGalaxyData = query({
       ].sort((a, b) => (a.date || 0) - (b.date || 0)),
       stats: {
         totalGoalsCompleted: completedGoals.length,
-        totalMiniArcsCompleted: completedMiniArcs.length,
         totalSkills: new Set(skillsLog.map(s => s.skill)).size,
         totalExperiences: experiences.length,
         currentStreak: profile?.currentStreak || 0,

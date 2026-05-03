@@ -65,11 +65,6 @@ const SkillsPage = lazy(async () => {
   return { default: module.SkillsPage };
 });
 
-const MiniArcsPage = lazy(async () => {
-  const module = await import("./components/MiniArcsPage");
-  return { default: module.MiniArcsPage };
-});
-
 const ResumePage = lazy(async () => {
   const module = await import("./components/ResumePage");
   return { default: module.ResumePage };
@@ -78,11 +73,6 @@ const ResumePage = lazy(async () => {
 const ArcConnectPage = lazy(async () => {
   const module = await import("./components/ArcConnectPage");
   return { default: module.ArcConnectPage };
-});
-
-const ShopPage = lazy(async () => {
-  const module = await import("./components/ShopPage");
-  return { default: module.ShopPage };
 });
 
 const GoalDetailWrapper = lazy(async () => {
@@ -160,12 +150,10 @@ export function AppRoutes() {
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<GalaxyDashboard />} />
           <Route path="/missions" element={<MissionsPage />} />
-          <Route path="/mini-arcs" element={<MiniArcsPage />} />
           <Route path="/achievements" element={<AchievementsPage />} />
           <Route path="/skills" element={<SkillsPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/connect" element={<ArcConnectPage />} />
-          <Route path="/shop" element={<ShopPage />} />
           <Route path="/timeline" element={<TimelinePage />} />
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/goal/:goalId" element={<GoalDetailWrapper />} />

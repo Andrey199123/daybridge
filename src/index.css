@@ -31,7 +31,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 :root {
-  --input-bg: #0D1B3D;
+  /* Keep input surfaces aligned with the DayBridge space palette (not the old Arc navy). */
+  --input-bg: var(--bg-space-800);
   
   --category-academic: #1FA2FF;
   --category-career: #00D4FF;

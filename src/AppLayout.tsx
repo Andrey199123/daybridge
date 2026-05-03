@@ -133,7 +133,6 @@ export function AppLayout() {
     if (path.includes('/missions')) return 'missions';
     if (path.includes('/achievements')) return 'achievements';
     if (path.includes('/skills')) return 'skills';
-    if (path.includes('/mini-arcs')) return 'mini-arcs';
     if (path.includes('/resume')) return 'resume';
     if (path.includes('/connect')) return 'connect';
     if (path.includes('/goal/')) return 'galaxy'; // Care plan detail stays on day map
@@ -146,7 +145,7 @@ export function AppLayout() {
     if (navFromPath !== activeNav) {
       setActiveNav(navFromPath);
     }
-  }, [location.pathname, activeNav]);
+  }, [location.pathname]);
 
   // Check for paused tutorial and show notification on non-Galaxy pages
   useEffect(() => {
@@ -169,24 +168,16 @@ export function AppLayout() {
     }
   }, [currentUser?.profile?.completedOnboarding]);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
   // Check if user chose to skip onboarding
   const hasSkippedOnboarding = readSessionStorage('skipOnboarding') === 'true';
   const hasCompletedOnboarding = currentUser?.profile?.completedOnboarding === true;
   const isAnonymousUser = currentUser?.isAnonymous === true;
   const shouldRedirectToAuth =
-    (!guestReconnectPending && currentUser === null) ||
-    (!hasCompletedOnboarding && !hasSkippedOnboarding && !onboardingJustCompleted && !isAnonymousUser);
+    (!isLoading && !guestReconnectPending && currentUser === null) ||
+    (!isLoading && !hasCompletedOnboarding && !hasSkippedOnboarding && !onboardingJustCompleted && !isAnonymousUser);
 
   useEffect(() => {
-    if (!shouldRedirectToAuth) {
+    if (isLoading || !shouldRedirectToAuth) {
       return;
     }
 
@@ -194,7 +185,15 @@ export function AppLayout() {
       from_path: location.pathname,
       reason: currentUser === null ? "not_authenticated" : "onboarding_incomplete",
     });
-  }, [currentUser, location.pathname, shouldRedirectToAuth]);
+  }, [currentUser, isLoading, location.pathname, shouldRedirectToAuth]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   if (shouldRedirectToAuth) {
     return <Navigate to="/auth" replace />;

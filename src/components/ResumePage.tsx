@@ -785,10 +785,10 @@ export function ResumePage() {
             </div>
 
             {/* Empty State */}
-            {sections && sections.experience?.length === 0 && sections.skills?.length === 0 && (
+              {sections && sections.experience?.length === 0 && sections.skills?.length === 0 && (
               <div className="mt-6 p-6 bg-white/5 border border-white/10 rounded-xl text-center">
                 <p className="text-white/60">
-                  Complete care plans and quick routines to automatically populate your summary with useful support details.
+                  Complete care plans and tasks to automatically populate your summary with useful support details.
                 </p>
               </div>
             )}

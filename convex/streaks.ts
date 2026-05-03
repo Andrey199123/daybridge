@@ -69,19 +69,8 @@ export const trackDailyLogin = mutation({
             currentStreak = (userProfile.currentStreak || 0) + 1;
             console.log(`Streak continued from yesterday: ${currentStreak}`);
         } else if (userProfile.currentStreak > 0) {
-            // Streak was broken - check for insurance
-            console.log("Streak was broken, checking for insurance");
-            const insuranceUsed = await ctx.runMutation(internal.shop.useStreakInsurance, { userId });
-            if (insuranceUsed) {
-                currentStreak = (userProfile.currentStreak || 0) + 1;
-                await ctx.runMutation(api.notifications.createNotification, {
-                    message: "🛡️ Streak Insurance activated! Your streak was saved!",
-                });
-                console.log(`Insurance used, streak saved: ${currentStreak}`);
-            } else {
-                console.log("No insurance, streak reset to 1");
-            }
-            // If no insurance, streak resets to 1 (already set above)
+            // Streak was broken; reset to 1 (today counts as day 1).
+            console.log("Streak was broken, resetting to 1");
         } else {
             console.log("New streak started: 1 day");
         }
@@ -192,16 +181,7 @@ export const updateStreak = action({
             // Streak continued from yesterday
             currentStreak = (userProfile.profile.currentStreak || 0) + 1;
         } else if (userProfile.profile.currentStreak > 0) {
-            // Streak was broken - check for insurance
-            const insuranceUsed = await ctx.runMutation(internal.shop.useStreakInsurance, { userId });
-            if (insuranceUsed) {
-                // Insurance saved the streak!
-                currentStreak = (userProfile.profile.currentStreak || 0) + 1;
-                await ctx.runMutation(api.notifications.createNotification, {
-                    message: "🛡️ Streak Insurance activated! Your streak was saved!",
-                });
-            }
-            // If no insurance, streak resets to 1 (already set above)
+            // Streak was broken; reset to 1 (today counts as day 1).
         }
 
         let longestStreak = userProfile.profile.longestStreak || 0;

@@ -81,20 +81,6 @@ export const getResumeData = query({
       .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
-    // Get completed mini-arcs
-    const completedMiniArcs = await ctx.db
-      .query("userMiniArcs")
-      .withIndex("by_user_status", (q) => q.eq("userId", userId).eq("status", "completed"))
-      .collect();
-
-    // Get mini-arc templates for completed arcs
-    const miniArcDetails = await Promise.all(
-      completedMiniArcs.map(async (arc) => {
-        const template = await ctx.db.get(arc.templateId);
-        return template ? { ...arc, template } : null;
-      })
-    );
-
     // Aggregate unique skills
     const uniqueSkills = [...new Set([
       ...(profile.skills || []),
@@ -116,7 +102,6 @@ export const getResumeData = query({
       },
       completedGoals,
       experiences,
-      miniArcs: miniArcDetails.filter(Boolean),
       skills: uniqueSkills,
     };
   },
@@ -151,18 +136,6 @@ export const getResumeDataForGeneration = query({
       .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
 
-    const completedMiniArcs = await ctx.db
-      .query("userMiniArcs")
-      .withIndex("by_user_status", (q) => q.eq("userId", userId).eq("status", "completed"))
-      .collect();
-
-    const miniArcDetails = await Promise.all(
-      completedMiniArcs.map(async (arc) => {
-        const template = await ctx.db.get(arc.templateId);
-        return template ? { ...arc, template } : null;
-      })
-    );
-
     const uniqueSkills = [...new Set([
       ...(profile.skills || []),
       ...skillsLog.map(s => s.skill),
@@ -183,7 +156,6 @@ export const getResumeDataForGeneration = query({
       },
       completedGoals,
       experiences,
-      miniArcs: miniArcDetails.filter(Boolean),
       skills: uniqueSkills,
     };
   },
@@ -222,18 +194,6 @@ export const generateResumeBasic = query({
       .query("skillsLog")
       .withIndex("by_user", (q) => q.eq("userId", userId))
       .collect();
-
-    const completedMiniArcs = await ctx.db
-      .query("userMiniArcs")
-      .withIndex("by_user_status", (q) => q.eq("userId", userId).eq("status", "completed"))
-      .collect();
-
-    const miniArcDetails = await Promise.all(
-      completedMiniArcs.map(async (arc) => {
-        const template = await ctx.db.get(arc.templateId);
-        return template ? { ...arc, template } : null;
-      })
-    );
 
     const usedVerbs = new Set<string>();
 
@@ -280,7 +240,6 @@ export const generateResumeBasic = query({
     const allSkills = [...new Set([
       ...(profile.skills || []),
       ...skillsLog.map(s => s.skill),
-      ...miniArcDetails.filter(Boolean).flatMap(a => a?.template?.skills || []),
     ])];
 
     const achievements = (profile.awards || []).map(award => ({
@@ -465,10 +424,6 @@ ${resumeData.completedGoals.map((g: any) => `- ${g.title} (${g.category}): ${g.d
 SUPPORT EXPERIENCES (${resumeData.experiences.length}):
 ${resumeData.experiences.map((e: any) => `- ${e.title} (${e.category}): ${e.description}
   Skills: ${e.skills.join(', ')}`).join('\n')}
-
-QUICK ROUTINES COMPLETED (${resumeData.miniArcs.length}):
-${resumeData.miniArcs.map((m: any) => `- ${m.template?.title}: ${m.template?.deliverable}
-  Skills: ${m.template?.skills?.join(', ') || 'None'}`).join('\n')}
 
 STRENGTHS: ${resumeData.skills.join(', ')}
 

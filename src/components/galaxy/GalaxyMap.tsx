@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Sparkles, AlertCircle, Clock, Filter, List, Globe, Zap, Award, Briefcase, Calendar } from "lucide-react";
-import { useActiveTheme } from "../../hooks/useActiveTheme";
 import { matchesMediaQuery } from "../../lib/browser";
 
 const categoryColors: Record<string, string> = {
@@ -80,7 +79,6 @@ interface GalaxyData {
   }>;
   stats: {
     totalGoalsCompleted: number;
-    totalMiniArcsCompleted: number;
     totalSkills: number;
     totalExperiences: number;
     currentStreak: number;
@@ -356,7 +354,6 @@ function MilestonePin({
   
   const typeColors: Record<string, string> = {
     goal_completed: "#00E0FF",
-    miniarc_completed: "#8A7CFF",
     achievement: "#FFD700",
   };
   const color = typeColors[milestone.type] || "#00E0FF";
@@ -587,7 +584,6 @@ function TimelineView({
   const typeIcons: Record<string, string> = {
     join: "Start",
     goal_completed: "Done",
-    miniarc_completed: "Quick",
     achievement: "Win",
     experience: "Care",
   };
@@ -595,7 +591,6 @@ function TimelineView({
   const typeColors: Record<string, string> = {
     join: "#FFD700",
     goal_completed: "#00E0FF",
-    miniarc_completed: "#8A7CFF",
     achievement: "#FFD700",
     experience: "#00D4FF",
   };
@@ -675,9 +670,8 @@ export function GalaxyMap({
   const [hoveredSkillRing, setHoveredSkillRing] = useState<string | null>(null);
   const [dismissedNudge, setDismissedNudge] = useState(false);
   
-  // Get active theme
-  const { theme } = useActiveTheme();
-  const themeBackgroundGradient = theme?.backgroundGradient || "linear-gradient(to bottom right, #0D1B3D, #142850, #0D1B3D)";
+  const themeBackgroundGradient =
+    "linear-gradient(135deg, var(--bg-space-900), var(--bg-space-800) 45%, var(--bg-space-900))";
 
   const prefersReducedMotion = matchesMediaQuery("(prefers-reduced-motion: reduce)");
   const animated = !prefersReducedMotion;
@@ -766,7 +760,7 @@ export function GalaxyMap({
     
     if (galaxyData.lowActivityCategories.length > 0) {
       const cat = galaxyData.lowActivityCategories[0].replace('_', ' ');
-      return { message: `You have not updated ${cat} for a while. Ready to add a quick routine?`, type: "info" as const };
+      return { message: `You have not updated ${cat} for a while. Want to add a reminder or care plan?`, type: "info" as const };
     }
     
     return null;

@@ -42,17 +42,10 @@ export const getUserSkillProfile = query({
       .withIndex("by_user_status", (q) => q.eq("userId", userId as Id<"users">).eq("status", "completed"))
       .collect();
 
-    // Get completed Mini-Arcs
-    const completedMiniArcs = await ctx.db
-      .query("userMiniArcs")
-      .withIndex("by_user_status", (q) => q.eq("userId", userId as Id<"users">).eq("status", "completed"))
-      .collect();
-
     return {
       acquiredSkills,
       totalSkillsLogged: skillsLog.length,
       completedGoalsCount: completedGoals.length,
-      completedMiniArcsCount: completedMiniArcs.length,
       categories: [...new Set(completedGoals.map((g) => g.category))],
     };
   },

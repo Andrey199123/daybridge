@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { GoalsService, AIService, MilestonesService } from '../../services';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -1102,7 +1102,11 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               </SelectTrigger>
               <SelectContent className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] rounded-[8px]">
                 {CATEGORY_UI.map(cat => (
-                  <SelectItem key={cat.value} value={cat.value} className="focus:bg-[oklch(94%_0.035_116)]">
+                  <SelectItem
+                    key={cat.value}
+                    value={cat.value}
+                    className="focus:bg-[oklch(94%_0.035_116)] focus:text-[oklch(22%_0.035_145)]"
+                  >
                     {cat.label}
                   </SelectItem>
                 ))}
@@ -1128,10 +1132,10 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-white border-[oklch(84%_0.03_116)] text-[oklch(22%_0.035_145)] rounded-[8px]">
-                <SelectItem value="low" className="focus:bg-[oklch(94%_0.035_116)]">Low</SelectItem>
-                <SelectItem value="medium" className="focus:bg-[oklch(94%_0.035_116)]">Medium</SelectItem>
-                <SelectItem value="high" className="focus:bg-[oklch(94%_0.035_116)]">High</SelectItem>
-                <SelectItem value="critical" className="focus:bg-[oklch(94%_0.035_116)]">Urgent</SelectItem>
+                <SelectItem value="low" className="focus:bg-[oklch(94%_0.035_116)] focus:text-[oklch(22%_0.035_145)]">Low</SelectItem>
+                <SelectItem value="medium" className="focus:bg-[oklch(94%_0.035_116)] focus:text-[oklch(22%_0.035_145)]">Medium</SelectItem>
+                <SelectItem value="high" className="focus:bg-[oklch(94%_0.035_116)] focus:text-[oklch(22%_0.035_145)]">High</SelectItem>
+                <SelectItem value="critical" className="focus:bg-[oklch(94%_0.035_116)] focus:text-[oklch(22%_0.035_145)]">Urgent</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -1204,12 +1208,12 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {connectivity.isOffline ? (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-xs text-red-400">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-red-50 border border-red-200 rounded-full text-xs text-red-700">
                   <WifiOff className="w-3 h-3" />
                   Offline
                 </div>
               ) : (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-xs text-green-400">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-full text-xs text-green-700">
                   <Wifi className="w-3 h-3" />
                   Online
                 </div>
@@ -1218,10 +1222,10 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               {/* Request state indicator */}
               {requestState !== "idle" && (
                 <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs border ${
-                  requestState === "sending" ? "bg-blue-500/10 border-blue-500/20 text-blue-400" :
-                  requestState === "waiting" ? "bg-purple-500/10 border-purple-500/20 text-purple-400 animate-pulse" :
-                  requestState === "success" ? "bg-green-500/10 border-green-500/20 text-green-400" :
-                  "bg-red-500/10 border-red-500/20 text-red-400"
+                  requestState === "sending" ? "bg-blue-50 border-blue-200 text-blue-700" :
+                  requestState === "waiting" ? "bg-purple-50 border-purple-200 text-purple-700 animate-pulse" :
+                  requestState === "success" ? "bg-green-50 border-green-200 text-green-700" :
+                  "bg-red-50 border-red-200 text-red-700"
                 }`}>
                   <Activity className="w-3 h-3" />
                   {requestState === "sending" ? "Sending..." :
@@ -1233,7 +1237,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
               {/* Circuit breaker indicator */}
               {circuitBreaker.isOpen && (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-xs text-orange-400">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs text-amber-700">
                   <AlertCircle className="w-3 h-3" />
                   Cooldown: {circuitBreaker.remainingSeconds}s
                 </div>
@@ -1241,7 +1245,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
               {/* Queue indicator */}
               {chatQueue.queueSize > 0 && (
-                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full text-xs text-yellow-400">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-yellow-50 border border-yellow-200 rounded-full text-xs text-yellow-700">
                   Queued: {chatQueue.queueSize}
                 </div>
               )}
@@ -1251,7 +1255,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               {showSummary && (
                 <button
                   onClick={() => setShowSummary(false)}
-                  className="text-xs text-gray-400 hover:text-white flex items-center gap-1"
+                  className="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1"
                 >
                   <ChevronDown className="w-3 h-3" />
                   Hide Summary
@@ -1262,7 +1266,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               {import.meta.env.DEV && (
                 <button
                   onClick={() => setShowDevConsole(!showDevConsole)}
-                  className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+                  className="text-xs text-gray-500 hover:text-gray-700 transition-colors"
                   title="Toggle dev diagnostics"
                 >
                   {showDevConsole ? '▼ Dev Console' : '▶ Dev Console'}
@@ -1324,38 +1328,38 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
           {/* API Key warning */}
           {!hasAPIKey && (
-            <div className="flex items-start gap-2 p-3 bg-[#FFC107]/10 border border-[#FFC107]/30 rounded-lg backdrop-blur-sm">
-              <AlertCircle className="w-4 h-4 text-[#FFC107] flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-white/90">
-                <strong className="text-[#FFC107]">AI temporarily unavailable:</strong> Please try again in a moment.
+            <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div className="text-xs text-gray-800">
+                <strong className="text-amber-700">AI temporarily unavailable:</strong> Please try again in a moment.
               </div>
             </div>
           )}
 
           {/* AI health warning */}
           {!isAIHealthy && hasAPIKey && (
-            <div className="flex items-start gap-2 p-3 bg-[#FF4D4F]/10 border border-[#FF4D4F]/30 rounded-lg backdrop-blur-sm">
-              <AlertCircle className="w-4 h-4 text-[#FF4D4F] flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-white/90">
-                <strong className="text-[#FF4D4F]">AI Service Error:</strong> {aiHealth?.message || "Unable to connect to AI service"}
+            <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="text-xs text-gray-800">
+                <strong className="text-red-700">AI Service Error:</strong> {aiHealth?.message || "Unable to connect to AI service"}
               </div>
             </div>
           )}
 
           {/* Circuit breaker warning */}
           {circuitBreaker.isOpen && (
-            <div className="flex items-center justify-between p-3 bg-[#FFA735]/10 border border-[#FFA735]/30 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-lg">
               <div className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-[#FFA735] flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-white/90">
-                  <strong className="text-[#FFA735]">Too many failures.</strong> Waiting {circuitBreaker.remainingSeconds}s before retry...
+                <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-gray-800">
+                  <strong className="text-amber-700">Too many failures.</strong> Waiting {circuitBreaker.remainingSeconds}s before retry...
                 </div>
               </div>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={circuitBreaker.forceClose}
-                className="text-xs h-7 border-[#FFA735]/30 text-[#FFA735] hover:bg-[#FFA735]/10"
+                className="text-xs h-7 border-amber-300 text-amber-700 hover:bg-amber-100"
               >
                 Try Now
             </Button>
@@ -1364,11 +1368,11 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
           {/* Error message */}
           {requestState === "error" && lastFailedMessage && (
-            <div className="flex items-center justify-between p-3 bg-[#FF4D4F]/10 border border-[#FF4D4F]/30 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center justify-between p-3 bg-red-50 border border-red-200 rounded-lg">
               <div className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-[#FF4D4F] flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-white/90">
-                  <strong className="text-[#FF4D4F]">Message failed.</strong> You can retry or edit your last message.
+                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-gray-800">
+                  <strong className="text-red-700">Message failed.</strong> You can retry or edit your last message.
                 </div>
               </div>
               <div className="flex gap-2">
@@ -1376,7 +1380,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                   size="sm"
                   variant="outline"
                   onClick={handleEditLastMessage}
-                  className="text-xs h-7 border-white/20 text-gray-300 hover:bg-white/5"
+                  className="text-xs h-7 border-gray-300 text-gray-700 hover:bg-gray-100"
                 >
                   <Edit2 className="w-3 h-3 mr-1" />
                   Edit
@@ -1384,7 +1388,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               <Button
                   size="sm"
                   onClick={handleRetry}
-                  className="text-xs h-7 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white"
+                  className="text-xs h-7 bg-[color:oklch(40%_0.1_153)] hover:bg-[color:oklch(35%_0.1_153)] text-white"
               >
                   Retry
               </Button>
@@ -1412,8 +1416,8 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                   <div
                     className={`max-w-[80%] px-4 py-2.5 rounded-lg ${
                       msg.role === "user"
-                        ? "bg-gradient-to-r from-[#00E0FF]/20 to-[#6C63FF]/20 border border-[#00E0FF]/30 text-white"
-                        : "bg-[#0D1B3D]/60 border border-white/10 text-gray-100 backdrop-blur-sm"
+                        ? "bg-[color:oklch(40%_0.1_153)]/10 border border-[color:oklch(40%_0.1_153)]/30 text-gray-900"
+                        : "bg-white border border-gray-200 text-gray-900"
                     }`}
                   >
                     {msg.role === "user" ? (
@@ -1434,11 +1438,11 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="max-w-[80%] px-4 py-2.5 rounded-lg bg-[#0D1B3D]/60 border border-white/10 text-gray-100 backdrop-blur-sm">
+                  <div className="max-w-[80%] px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-gray-900">
                     <div className="text-sm leading-relaxed">
                       <MarkdownText content={streamingResponse} />
                     </div>
-                    <span className="inline-block w-2 h-4 bg-[#00E0FF] animate-pulse ml-1" />
+                    <span className="inline-block w-2 h-4 bg-[color:oklch(40%_0.1_153)] animate-pulse ml-1" />
                   </div>
                 </motion.div>
               )}
@@ -1450,10 +1454,10 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="px-4 py-2.5 rounded-lg bg-[#0D1B3D]/60 border border-white/10 backdrop-blur-sm">
+                  <div className="px-4 py-2.5 rounded-lg bg-white border border-gray-200">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-[#00E0FF]" />
-                      <span className="text-sm text-gray-300">
+                      <Loader2 className="w-4 h-4 animate-spin text-[color:oklch(40%_0.1_153)]" />
+                      <span className="text-sm text-gray-700">
                         {requestState === "sending" ? "Sending..." : "DayBridge is thinking..."}
                       </span>
                     </div>
@@ -1474,8 +1478,8 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                     disabled={isInputDisabled}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all border ${
                       selectedChipIndex === idx
-                        ? "bg-[#00E0FF]/30 border-[#00E0FF]/50 text-white shadow-lg shadow-[#00E0FF]/20"
-                        : "bg-[#0D1B3D]/60 border-white/20 text-gray-200 hover:bg-[#0D1B3D] hover:border-[#00E0FF]/30"
+                        ? "bg-[color:oklch(40%_0.1_153)]/20 border-[color:oklch(40%_0.1_153)] text-gray-900 shadow-md"
+                        : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-[color:oklch(40%_0.1_153)]/50"
                     } ${isInputDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
                     {reply}
@@ -1491,11 +1495,11 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="w-64 bg-[#0D1B3D]/80 border border-[#00E0FF]/20 rounded-lg p-4 space-y-3 flex-shrink-0 overflow-y-auto backdrop-blur-sm"
+              className="w-64 bg-white border border-gray-200 rounded-lg p-4 space-y-3 flex-shrink-0 overflow-y-auto shadow-sm"
             >
               <div className="flex items-center justify-between mb-2">
-                <h4 className="font-semibold text-sm text-white uppercase tracking-wider">Care Plan Summary</h4>
-                <button onClick={() => setShowSummary(false)} className="text-gray-400 hover:text-white transition-colors">
+                <h4 className="font-semibold text-sm text-gray-900 uppercase tracking-wider">Care Plan Summary</h4>
+                <button onClick={() => setShowSummary(false)} className="text-gray-500 hover:text-gray-900 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -1503,67 +1507,67 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               {/* Progress meter */}
               <div className="mb-3">
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="text-gray-400">Progress</span>
-                  <span className="text-[#00E0FF] font-medium">{getCompletionPercentage()}%</span>
+                  <span className="text-gray-600">Progress</span>
+                  <span className="text-[color:oklch(40%_0.1_153)] font-medium">{getCompletionPercentage()}%</span>
                 </div>
-                <div className="w-full h-2 bg-[#142850] rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getCompletionPercentage()}%` }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-[#00E0FF] to-[#6C63FF] rounded-full"
+                    className="h-full bg-[color:oklch(40%_0.1_153)] rounded-full"
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-gray-500 mt-1">
                   <span>Step {completedSlots.size + 1}/5</span>
-                  <span className="text-[#00E0FF]">{getSlotConfig(currentSlot).label}</span>
+                  <span className="text-[color:oklch(40%_0.1_153)]">{getSlotConfig(currentSlot).label}</span>
                 </div>
               </div>
 
               {Object.keys(smartSummary).length === 0 ? (
-                <p className="text-xs text-gray-400 italic">Chat to build a clear care plan...</p>
+                <p className="text-xs text-gray-500 italic">Chat to build a clear care plan...</p>
               ) : (
                 <div className="space-y-3 text-xs">
                   {smartSummary.specific && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-[#00E0FF]/10 rounded">
-                      <div className="font-medium text-[#00E0FF] mb-1 uppercase tracking-wide text-[10px]">Specific</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.specific}</div>
+                    <div className="p-2.5 bg-blue-50 border border-blue-200 rounded">
+                      <div className="font-medium text-blue-700 mb-1 uppercase tracking-wide text-[10px]">Specific</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.specific}</div>
                     </div>
                   )}
                   {smartSummary.measurable && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-[#6C63FF]/10 rounded">
-                      <div className="font-medium text-[#6C63FF] mb-1 uppercase tracking-wide text-[10px]">Measurable</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.measurable}</div>
+                    <div className="p-2.5 bg-purple-50 border border-purple-200 rounded">
+                      <div className="font-medium text-purple-700 mb-1 uppercase tracking-wide text-[10px]">Measurable</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.measurable}</div>
                     </div>
                   )}
                   {smartSummary.achievable && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-[#21D07A]/10 rounded">
-                      <div className="font-medium text-[#21D07A] mb-1 uppercase tracking-wide text-[10px]">Achievable</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.achievable}</div>
+                    <div className="p-2.5 bg-green-50 border border-green-200 rounded">
+                      <div className="font-medium text-green-700 mb-1 uppercase tracking-wide text-[10px]">Achievable</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.achievable}</div>
                     </div>
                   )}
                   {smartSummary.relevant && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-[#FFC107]/10 rounded">
-                      <div className="font-medium text-[#FFC107] mb-1 uppercase tracking-wide text-[10px]">Relevant</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.relevant}</div>
+                    <div className="p-2.5 bg-amber-50 border border-amber-200 rounded">
+                      <div className="font-medium text-amber-700 mb-1 uppercase tracking-wide text-[10px]">Relevant</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.relevant}</div>
                     </div>
                   )}
                   {smartSummary.timeBound && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-[#FF4D4F]/10 rounded">
-                      <div className="font-medium text-[#FF4D4F] mb-1 uppercase tracking-wide text-[10px]">Time-bound</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.timeBound}</div>
+                    <div className="p-2.5 bg-red-50 border border-red-200 rounded">
+                      <div className="font-medium text-red-700 mb-1 uppercase tracking-wide text-[10px]">Time-bound</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.timeBound}</div>
                     </div>
                   )}
                   {smartSummary.category && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-white/10 rounded">
-                      <div className="font-medium text-gray-400 mb-1 uppercase tracking-wide text-[10px]">Category</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.category}</div>
+                    <div className="p-2.5 bg-gray-50 border border-gray-200 rounded">
+                      <div className="font-medium text-gray-700 mb-1 uppercase tracking-wide text-[10px]">Category</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.category}</div>
                     </div>
                   )}
                   {smartSummary.deadline && (
-                    <div className="p-2.5 bg-[#142850]/50 border border-white/10 rounded">
-                      <div className="font-medium text-gray-400 mb-1 uppercase tracking-wide text-[10px]">Deadline</div>
-                      <div className="text-gray-200 leading-relaxed">{smartSummary.deadline}</div>
+                    <div className="p-2.5 bg-gray-50 border border-gray-200 rounded">
+                      <div className="font-medium text-gray-700 mb-1 uppercase tracking-wide text-[10px]">Deadline</div>
+                      <div className="text-gray-800 leading-relaxed">{smartSummary.deadline}</div>
                     </div>
                   )}
                 </div>
@@ -1573,7 +1577,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
         </div>
 
         {/* Input area */}
-        <div className="mt-4 pt-4 border-t border-white/10">
+        <div className="mt-4 pt-4 border-t border-gray-200">
           <div className="flex gap-2">
             <div className="flex-1 relative">
               <Input
@@ -1590,12 +1594,12 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
                   "Type your response..."
                 }
                 disabled={isInputDisabled}
-                className="bg-[#0D1B3D] border-white/20 text-white placeholder:text-gray-500 focus:border-[#00E0FF] focus:ring-[#00E0FF]/20 pr-10"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-[color:oklch(40%_0.1_153)] focus:ring-[color:oklch(40%_0.1_153)]/20 pr-10"
               />
               {requestState === "waiting" && (
                 <button
                   onClick={handleAbort}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#FF4D4F] hover:text-[#FF4D4F]/80 transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-red-600 hover:text-red-700 transition-colors"
                   title="Cancel request"
                 >
                   <X className="w-4 h-4" />
@@ -1606,7 +1610,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
               onClick={() => handleSendMessage()}
               disabled={isSendDisabled}
               size="icon"
-              className="arc-primary-gradient text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-[color:oklch(40%_0.1_153)] hover:bg-[color:oklch(35%_0.1_153)] text-white disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send className="w-4 h-4" />
             </Button>
@@ -1616,7 +1620,7 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
           {isChatComplete && (
             <Button
               onClick={handleConfirmSMART}
-              className="w-full mt-3 bg-gradient-to-r from-[#21D07A] to-[#21D07A] hover:from-[#21D07A]/90 hover:to-[#21D07A]/90 text-white font-medium shadow-lg shadow-[#21D07A]/20"
+              className="w-full mt-3 bg-[color:oklch(40%_0.1_153)] hover:bg-[color:oklch(35%_0.1_153)] text-white font-medium shadow-md"
             >
               <Check className="w-4 h-4 mr-2" />
               Confirm Care Plan
@@ -1629,14 +1633,14 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
 
   const renderConfirm = () => (
     <div className="space-y-6 pt-2">
-      <div className="bg-gradient-to-r from-[#21D07A]/10 to-[#21D07A]/10 border border-[#21D07A]/30 rounded-lg p-4 backdrop-blur-sm">
+      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#21D07A]/20 flex items-center justify-center flex-shrink-0">
-            <Check className="w-5 h-5 text-[#21D07A]" />
+          <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+            <Check className="w-5 h-5 text-green-700" />
           </div>
           <div>
-            <h3 className="font-semibold text-white mb-1">Care Plan Ready</h3>
-            <p className="text-sm text-gray-300">
+            <h3 className="font-semibold text-gray-900 mb-1">Care Plan Ready</h3>
+            <p className="text-sm text-gray-700">
               The plan has been clarified and checked. Review the summary below and add it to the day board.
             </p>
           </div>
@@ -1644,45 +1648,45 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
             </div>
 
       <div className="space-y-3">
-        <div className="p-4 bg-[#0D1B3D]/60 border border-[#00E0FF]/20 rounded-lg backdrop-blur-sm">
-          <div className="font-medium text-[#00E0FF] text-xs mb-2 uppercase tracking-wider">Specific</div>
-          <p className="text-sm text-white leading-relaxed">{smartSummary.specific}</p>
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="font-medium text-blue-700 text-xs mb-2 uppercase tracking-wider">Specific</div>
+          <p className="text-sm text-gray-900 leading-relaxed">{smartSummary.specific}</p>
               </div>
 
         {smartSummary.measurable && (
-          <div className="p-4 bg-[#0D1B3D]/60 border border-[#6C63FF]/20 rounded-lg backdrop-blur-sm">
-            <div className="font-medium text-[#6C63FF] text-xs mb-2 uppercase tracking-wider">Measurable</div>
-            <p className="text-sm text-white leading-relaxed">{smartSummary.measurable}</p>
+          <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+            <div className="font-medium text-purple-700 text-xs mb-2 uppercase tracking-wider">Measurable</div>
+            <p className="text-sm text-gray-900 leading-relaxed">{smartSummary.measurable}</p>
             </div>
         )}
 
         {smartSummary.achievable && (
-          <div className="p-4 bg-[#0D1B3D]/60 border border-[#21D07A]/20 rounded-lg backdrop-blur-sm">
-            <div className="font-medium text-[#21D07A] text-xs mb-2 uppercase tracking-wider">Achievable</div>
-            <p className="text-sm text-white leading-relaxed">{smartSummary.achievable}</p>
+          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="font-medium text-green-700 text-xs mb-2 uppercase tracking-wider">Achievable</div>
+            <p className="text-sm text-gray-900 leading-relaxed">{smartSummary.achievable}</p>
           </div>
         )}
 
         {smartSummary.timeBound && (
-          <div className="p-4 bg-[#0D1B3D]/60 border border-[#FF4D4F]/20 rounded-lg backdrop-blur-sm">
-            <div className="font-medium text-[#FF4D4F] text-xs mb-2 uppercase tracking-wider">Time-bound</div>
-            <p className="text-sm text-white leading-relaxed">{smartSummary.timeBound}</p>
+          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="font-medium text-red-700 text-xs mb-2 uppercase tracking-wider">Time-bound</div>
+            <p className="text-sm text-gray-900 leading-relaxed">{smartSummary.timeBound}</p>
           </div>
         )}
       </div>
 
-      <div className="flex justify-between gap-3 pt-5 border-t border-white/10">
+      <div className="flex justify-between gap-3 pt-5 border-t border-gray-200">
               <Button
                 variant="outline"
           onClick={() => setStep("chat")}
-          className="border-white/20 text-gray-300 hover:bg-white/5 hover:text-white"
+          className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900"
               >
           <Edit2 className="w-4 h-4 mr-2" />
           Edit Plan
               </Button>
               <Button
           onClick={handleCreateGoal}
-          className="bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] hover:from-[#FF9A10] hover:to-[#FF5D10] text-white font-medium shadow-lg shadow-orange-500/20"
+          className="bg-[color:oklch(40%_0.1_153)] hover:bg-[color:oklch(35%_0.1_153)] text-white font-medium shadow-md"
               >
           <PlayCircle className="w-4 h-4 mr-2" />
           Add Care Plan
@@ -1694,10 +1698,10 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
   const renderCreating = () => (
     <div className="flex flex-col items-center justify-center py-12">
       <div className="relative">
-        <div className="absolute inset-0 blur-xl bg-[#00E0FF]/20 animate-pulse"></div>
-        <Loader2 className="relative w-12 h-12 animate-spin text-[#00E0FF] mb-4" />
+        <div className="absolute inset-0 blur-xl bg-[color:oklch(40%_0.1_153)]/20 animate-pulse"></div>
+        <Loader2 className="relative w-12 h-12 animate-spin text-[color:oklch(40%_0.1_153)] mb-4" />
       </div>
-      <h3 className="text-lg font-semibold text-white mb-2">Creating Your Care Plan...</h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-2">Creating Your Care Plan...</h3>
       <p className="text-sm text-gray-400">Generating checkpoints and daily tasks...</p>
     </div>
   );
@@ -1712,6 +1716,9 @@ export function LaunchMissionModal({ onClose, onSuccess }) {
             {step === "confirm" && "Confirm Your Care Plan"}
             {step === "creating" && "Creating Care Plan"}
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Create a care plan for routines, appointments, and support needs. You can skip any optional fields.
+          </DialogDescription>
         </DialogHeader>
 
         {step === "initial" && renderInitialForm()}

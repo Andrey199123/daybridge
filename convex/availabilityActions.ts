@@ -353,34 +353,54 @@ Return ONLY JSON array:
       
       let scheduledCount = 0;
       
-      for (const scheduledTask of scheduledTasks) {
-        const dbTask = unscheduledTasks.find(t => t.title === scheduledTask.title);
+	      for (const scheduledTask of scheduledTasks) {
+	        const dbTask = unscheduledTasks.find(t => t.title === scheduledTask.title);
         
         if (!dbTask) {
           console.warn(`Task not found: "${scheduledTask.title}"`);
           continue;
         }
         
-        if (!scheduledTask.scheduledDate || !scheduledTask.scheduledTime) {
-          console.warn(`Missing date/time: "${scheduledTask.title}"`);
-          continue;
-        }
-        
-        let startDate = currentDate;
-        let deadline = goalDeadline || '2026-12-31';
+	        if (!scheduledTask.scheduledDate || !scheduledTask.scheduledTime) {
+	          console.warn(`Missing date/time: "${scheduledTask.title}"`);
+	          continue;
+	        }
+	        
+	        let startDate = currentDate;
+	        let deadline = goalDeadline || '2026-12-31';
         
         if (dbTask.milestoneId && milestoneDeadlines[dbTask.milestoneId]) {
           const bounds = milestoneDeadlines[dbTask.milestoneId];
           startDate = bounds.startDate;
-          deadline = bounds.deadline;
-        }
-        
-        let dateWarning = '';
-        if (scheduledTask.scheduledDate <= startDate) {
-          dateWarning = ` [WRONG: before ${startDate}]`;
-        } else if (scheduledTask.scheduledDate > deadline) {
-          dateWarning = ` [WRONG: after ${deadline}]`;
-        }
+	          deadline = bounds.deadline;
+	        }
+
+	        // Hard enforce availability: only schedule on dates that match the user's availability.
+	        // (The AI prompt already includes ALLOWED DATES, but we still validate and correct.)
+	        const allowedDates = getAvailableDatesInRange(startDate, deadline);
+	        if (allowedDates.length === 0) {
+	          console.warn(`No allowed dates for task "${scheduledTask.title}" in range ${startDate}..${deadline}. Skipping.`);
+	          continue;
+	        }
+
+	        let chosenDate: string = scheduledTask.scheduledDate;
+	        if (!allowedDates.includes(chosenDate)) {
+	          const nextWithCapacity = allowedDates.find((d) => d >= chosenDate && (tasksPerDate.get(d) || 0) < 2);
+	          const anyWithCapacity = allowedDates.find((d) => (tasksPerDate.get(d) || 0) < 2);
+	          const fallback = nextWithCapacity || anyWithCapacity || allowedDates[allowedDates.length - 1];
+
+	          console.warn(
+	            `Task "${scheduledTask.title}" scheduled on ${scheduledTask.scheduledDate} (not allowed). Moving to ${fallback}.`,
+	          );
+	          chosenDate = fallback;
+	        }
+	        
+	        let dateWarning = '';
+	        if (chosenDate <= startDate) {
+	          dateWarning = ` [WRONG: before ${startDate}]`;
+	        } else if (chosenDate > deadline) {
+	          dateWarning = ` [WRONG: after ${deadline}]`;
+	        }
         
         let duration = scheduledTask.durationMinutes || 45;
         const titleLower = scheduledTask.title.toLowerCase();
@@ -390,21 +410,21 @@ Return ONLY JSON array:
           else if (titleLower.includes('review') || titleLower.includes('analyze')) duration = 45;
         }
         
-        const currentCount = tasksPerDate.get(scheduledTask.scheduledDate) || 0;
-        const countInfo = currentCount > 0 ? ` [${currentCount + 1} on day]` : '';
-        
-        console.log(`Scheduling: "${dbTask.title.substring(0, 50)}..." -> ${scheduledTask.scheduledDate} ${scheduledTask.scheduledTime} (${duration}m)${dateWarning}${countInfo}`);
-        
-        await ctx.runMutation(internal.tasks.internalUpdateTask, {
-          taskId: dbTask._id,
-          scheduledDate: scheduledTask.scheduledDate,
-          scheduledTime: scheduledTask.scheduledTime,
-          durationMinutes: duration,
-        });
-        
-        tasksPerDate.set(scheduledTask.scheduledDate, currentCount + 1);
-        scheduledCount++;
-      }
+	        const currentCount = tasksPerDate.get(chosenDate) || 0;
+	        const countInfo = currentCount > 0 ? ` [${currentCount + 1} on day]` : '';
+	        
+	        console.log(`Scheduling: "${dbTask.title.substring(0, 50)}..." -> ${chosenDate} ${scheduledTask.scheduledTime} (${duration}m)${dateWarning}${countInfo}`);
+	        
+	        await ctx.runMutation(internal.tasks.internalUpdateTask, {
+	          taskId: dbTask._id,
+	          scheduledDate: chosenDate,
+	          scheduledTime: scheduledTask.scheduledTime,
+	          durationMinutes: duration,
+	        });
+	        
+	        tasksPerDate.set(chosenDate, currentCount + 1);
+	        scheduledCount++;
+	      }
       
       console.log(`Successfully scheduled ${scheduledCount} of ${unscheduledTasks.length} tasks`);
       

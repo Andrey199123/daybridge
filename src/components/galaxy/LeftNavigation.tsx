@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Home, ClipboardList, Clock, BarChart3,
-  Trophy, Pill, Car, Palette, HeartHandshake, Heart, Sparkles, Zap,
+  Trophy, Pill, Car, Palette, HeartHandshake, Heart, Sparkles,
   FileText, Users, LayoutGrid
 } from "lucide-react";
 import { useQuery } from "convex/react";
@@ -11,7 +11,6 @@ import { api } from "../../../convex/_generated/api";
 const navItems = [
   { id: "galaxy", label: "Day Map", icon: Home },
   { id: "missions", label: "Care Plans", icon: ClipboardList },
-  { id: "mini-arcs", label: "Quick Routines", icon: Zap },
   { id: "timeline", label: "Calendar", icon: Clock },
   { id: "leaderboard", label: "Care Signals", icon: BarChart3 },
   { id: "achievements", label: "Milestones", icon: Trophy },
@@ -82,9 +81,6 @@ export function LeftNavigation({ activeNav, setActiveNav, missions, selectedCate
                       break;
                     case 'missions':
                       navigate('/missions');
-                      break;
-                    case 'mini-arcs':
-                      navigate('/mini-arcs');
                       break;
                     case 'timeline':
                       navigate('/timeline');

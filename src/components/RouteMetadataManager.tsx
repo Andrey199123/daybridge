@@ -151,13 +151,6 @@ const ROUTE_METADATA: RouteMetadata[] = [
     type: "website",
   },
   {
-    pattern: "/mini-arcs",
-    title: "DayBridge Quick Routines",
-    description: "Your DayBridge quick routines and support paths.",
-    robots: "noindex, nofollow",
-    type: "website",
-  },
-  {
     pattern: "/achievements",
     title: "DayBridge Milestones",
     description: "Your DayBridge milestones and streaks.",
@@ -182,13 +175,6 @@ const ROUTE_METADATA: RouteMetadata[] = [
     pattern: "/connect",
     title: "DayBridge Care Circle",
     description: "Your DayBridge care-circle connections.",
-    robots: "noindex, nofollow",
-    type: "website",
-  },
-  {
-    pattern: "/shop",
-    title: "DayBridge Support Shop",
-    description: "Your DayBridge rewards and accessibility unlocks.",
     robots: "noindex, nofollow",
     type: "website",
   },

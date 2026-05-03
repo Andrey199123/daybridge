@@ -5,10 +5,36 @@ import "./index.css";
 import App from "./App";
 
 const CHUNK_RELOAD_KEY = "arc-chunk-reload-at";
+const SW_CLEANUP_KEY = "daybridge-sw-cleanup-v1";
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string, {
   // Dev deployments stream backend logs to connected clients; silence them in production builds.
   logger: import.meta.env.DEV,
 });
+
+// This project does not rely on a service worker, but a previous project running on the same
+// origin (e.g. localhost:5173) might have left one registered. That can cause confusing
+// navigation/fetch errors in development, so we proactively unregister.
+if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+  // Avoid reload loops if something keeps re-registering a service worker.
+  const alreadyCleanedUp = window.sessionStorage.getItem(SW_CLEANUP_KEY) === "1";
+
+  navigator.serviceWorker
+    .getRegistrations()
+    .then(async (registrations) => {
+      if (registrations.length === 0) return;
+
+      await Promise.allSettled(registrations.map((r) => r.unregister()));
+
+      // If a service worker was controlling this page, a reload ensures it stops intercepting.
+      if (!alreadyCleanedUp && navigator.serviceWorker.controller) {
+        window.sessionStorage.setItem(SW_CLEANUP_KEY, "1");
+        window.location.reload();
+      }
+    })
+    .catch(() => {
+      // Ignore service worker cleanup failures.
+    });
+}
 
 if (import.meta.env.PROD && typeof window !== "undefined") {
   window.addEventListener("vite:preloadError", (event) => {

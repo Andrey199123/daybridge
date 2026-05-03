@@ -29,15 +29,17 @@ export function SimpleDateInput({ value, onChange, className = "", placeholder =
     const input = e.target.value;
     setDisplayValue(input);
 
-    // Try to parse MM/DD/YYYY format
-    const match = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    // Try to parse MM/DD/YYYY (or MM/DD/YY) format.
+    // People often type 2-digit years like "05/25/26"; normalize to ISO YYYY-MM-DD.
+    const match = input.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
     if (match) {
       const [, month, day, year] = match;
       const monthNum = parseInt(month, 10);
       const dayNum = parseInt(day, 10);
       
       if (monthNum >= 1 && monthNum <= 12 && dayNum >= 1 && dayNum <= 31) {
-        const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        const fullYear = year.length === 2 ? `20${year}` : year;
+        const isoDate = `${fullYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
         onChange(isoDate);
       }
     } else if (input === "") {

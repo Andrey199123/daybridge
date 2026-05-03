@@ -45,14 +45,6 @@ const TUTORIAL_STEPS: TutorialStep[] = [
     highlightPadding: 8,
   },
   {
-    id: 'nav-mini-arcs',
-    title: 'Quick Routines',
-    description: 'Follow short support routines for common needs like visit prep, errands, calls, and home tasks.',
-    targetSelector: '[data-tutorial="nav-mini-arcs"]',
-    position: 'right',
-    highlightPadding: 8,
-  },
-  {
     id: 'nav-timeline',
     title: 'Calendar',
     description: 'See tasks organized by day, week, month, or year so plans are easier to follow.',
@@ -109,14 +101,6 @@ const TUTORIAL_STEPS: TutorialStep[] = [
     highlightPadding: 8,
   },
   {
-    id: 'coins',
-    title: 'Care Points',
-    description: 'Earn care points by completing tasks and routines, then use them for support-shop unlocks.',
-    targetSelector: '[data-tutorial="coins-button"]',
-    position: 'bottom',
-    highlightPadding: 8,
-  },
-  {
     id: 'streak',
     title: 'Daily Streak',
     description: 'Build a streak by completing daily tasks and keeping important routines visible.',
@@ -157,13 +141,35 @@ interface TutorialOverlayProps {
 
 export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
   const isDev = import.meta.env.DEV;
+  const debugTutorial = React.useMemo(() => {
+    if (!isDev) return false;
+    if (typeof window === "undefined") return false;
+    try {
+      return window.localStorage.getItem("daybridge_debug_tutorial") === "1";
+    } catch {
+      return false;
+    }
+  }, [isDev]);
+
+  const tlog = React.useCallback(
+    (...args: unknown[]) => {
+      if (debugTutorial) console.log(...args);
+    },
+    [debugTutorial],
+  );
+
+  const twarn = React.useCallback(
+    (...args: unknown[]) => {
+      if (debugTutorial) console.warn(...args);
+    },
+    [debugTutorial],
+  );
+
   const [currentStepIndex, setCurrentStepIndex] = useState(() => {
     const savedProgress = readSessionStorage('tutorialProgress');
     if (savedProgress) {
       const stepIndex = parseInt(savedProgress, 10);
-      if (isDev) {
-        console.log('[Tutorial] Resuming from saved step:', stepIndex);
-      }
+      tlog('[Tutorial] Resuming from saved step:', stepIndex);
       return stepIndex >= 0 && stepIndex < TUTORIAL_STEPS.length ? stepIndex : 0;
     }
     return 0;
@@ -181,39 +187,31 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
   useEffect(() => {
     writeSessionStorage('tutorialProgress', currentStepIndex.toString());
     writeSessionStorage('tutorialActive', 'true');
-    if (isDev) {
-      console.log('[Tutorial] Saved progress: step', currentStepIndex);
-    }
-  }, [currentStepIndex, isDev]);
+    tlog('[Tutorial] Saved progress: step', currentStepIndex);
+  }, [currentStepIndex, tlog]);
 
   // Clean up on unmount (user navigated away)
   useEffect(() => {
     return () => {
       if (currentStepIndex < TUTORIAL_STEPS.length - 1) {
         writeSessionStorage('tutorialPaused', 'true');
-        if (isDev) {
-          console.log('[Tutorial] Paused at step', currentStepIndex);
-        }
+        tlog('[Tutorial] Paused at step', currentStepIndex);
       }
     };
-  }, [currentStepIndex, isDev]);
+  }, [currentStepIndex, tlog]);
 
   // Log tutorial start
   useEffect(() => {
-    if (isDev) {
-      console.log('[Tutorial] Tutorial overlay mounted');
-      console.log('[Tutorial] Total steps:', TUTORIAL_STEPS.length);
-      console.log('[Tutorial] Starting at step:', currentStepIndex);
-    }
-  }, [currentStepIndex, isDev]);
+    tlog('[Tutorial] Tutorial overlay mounted');
+    tlog('[Tutorial] Total steps:', TUTORIAL_STEPS.length);
+    tlog('[Tutorial] Starting at step:', currentStepIndex);
+  }, [currentStepIndex, tlog]);
 
   // Force recalculation when page becomes visible (user returns from another page)
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        if (isDev) {
-          console.log('[Tutorial] Page became visible, forcing spotlight recalculation');
-        }
+        tlog('[Tutorial] Page became visible, forcing spotlight recalculation');
         setSpotlightRect(null);
       }
     };
@@ -223,7 +221,7 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [isDev]);
+  }, [tlog]);
 
   // Update spotlight position when step changes or component mounts
   useEffect(() => {
@@ -235,15 +233,15 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       const viewport = getViewportSize({ width: 1280, height: 720 });
       
       if (!element) {
-        if (isDev) {
-          console.warn(`[Tutorial] Element not found for selector: ${currentStep.targetSelector} (attempt ${retryCount + 1}/${maxRetries})`);
-          console.log(
-            '[Tutorial] Available elements with data-tutorial:',
-            Array.from(document.querySelectorAll('[data-tutorial]')).map((el) =>
-              el.getAttribute('data-tutorial'),
-            ),
-          );
-        }
+        twarn(
+          `[Tutorial] Element not found for selector: ${currentStep.targetSelector} (attempt ${retryCount + 1}/${maxRetries})`,
+        );
+        tlog(
+          '[Tutorial] Available elements with data-tutorial:',
+          Array.from(document.querySelectorAll('[data-tutorial]')).map((el) =>
+            el.getAttribute('data-tutorial'),
+          ),
+        );
         
         // Retry after a short delay (element might not be rendered yet)
         if (retryCount < maxRetries) {
@@ -256,9 +254,7 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       // Reset retry count on success
       retryCount = 0;
       
-      if (isDev) {
-        console.log(`[Tutorial] Found element for step "${currentStep.id}":`, element);
-      }
+      tlog(`[Tutorial] Found element for step "${currentStep.id}":`, element);
       
       const rect = element.getBoundingClientRect();
       setSpotlightRect(rect);
@@ -388,9 +384,7 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       // Special handling for first step (galaxy-view) - ensure tooltip is visible
       // If tooltip would be below viewport, center it on screen instead
       if (currentStep.id === 'galaxy-view' && y + tooltipHeight > viewport.height - edgePadding) {
-        if (isDev) {
-          console.log('[Tutorial] First step tooltip would be off-screen, centering on viewport');
-        }
+        tlog('[Tutorial] First step tooltip would be off-screen, centering on viewport');
         x = viewport.width / 2;
         y = Math.min(viewport.height / 2, rect.top + rect.height / 2);
         finalPosition = 'bottom';
@@ -401,9 +395,7 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       if (currentStep.id === 'mission-progress') {
         // On narrow screens or when element is low on screen, position tooltip above and centered
         if (viewport.width < 900 || rect.top > viewport.height / 2) {
-          if (isDev) {
-            console.log('[Tutorial] Mission progress on small screen or low position, positioning above');
-          }
+          tlog('[Tutorial] Mission progress on small screen or low position, positioning above');
           x = rect.left + rect.width / 2;
           y = rect.top - gap - tooltipHeight;
           finalPosition = 'top';
@@ -419,15 +411,13 @@ export function TutorialOverlay({ onComplete, onSkip }: TutorialOverlayProps) {
       setTooltipPosition({ x, y });
       setTooltipTransform({ position: finalPosition, alignment });
       
-      if (isDev) {
-        console.log(`[Tutorial] Positioning for "${currentStep.id}":`, {
-          elementRect: rect,
-          tooltipPos: { x, y },
-          finalPosition,
-          alignment,
-          viewport,
-        });
-      }
+      tlog(`[Tutorial] Positioning for "${currentStep.id}":`, {
+        elementRect: rect,
+        tooltipPos: { x, y },
+        finalPosition,
+        alignment,
+        viewport,
+      });
     };
 
     // Force immediate update when component mounts or step changes
