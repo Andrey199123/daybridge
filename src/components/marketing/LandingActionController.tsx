@@ -72,7 +72,7 @@ export function LandingActionController({
 
   const handleTryArcCta = useCallback(
     async (placement: string) => {
-      const destination = "/dashboard";
+      const destination = "/missions";
 
       trackEvent("landing_cta_click", {
         placement,

@@ -148,6 +148,7 @@ export function AppRoutes() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route element={<AppLayout />}>
+          {/* /dashboard shows the Day Map visual view (used by tutorial). /missions is the default landing view. */}
           <Route path="/dashboard" element={<GalaxyDashboard />} />
           <Route path="/missions" element={<MissionsPage />} />
           <Route path="/achievements" element={<AchievementsPage />} />

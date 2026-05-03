@@ -107,7 +107,7 @@ export function LeftNavigation({ activeNav, setActiveNav, missions, selectedCate
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all relative ${
                   isActive 
                     ? "bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)]" 
-                    : "text-white/60 hover:text-white/90 hover:bg-white/5"
+                    : "text-white/75 hover:text-white hover:bg-white/5"
                 }`}
                 whileHover={{ x: 4 }}
                 whileTap={{ scale: 0.98 }}
@@ -197,7 +197,7 @@ export function LeftNavigation({ activeNav, setActiveNav, missions, selectedCate
                       className="w-4 h-4" 
                       style={{ color: categoryColors[category] }}
                     />
-                    <span className={`text-sm ${isSelected ? 'text-white' : 'text-white/70'}`}>
+                    <span className={`text-sm ${isSelected ? 'text-white' : 'text-white/80'}`}>
                       {categoryLabels[category] || category.replace('_', ' ')}
                     </span>
                   </div>

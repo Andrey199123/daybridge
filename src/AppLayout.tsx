@@ -135,8 +135,9 @@ export function AppLayout() {
     if (path.includes('/skills')) return 'skills';
     if (path.includes('/resume')) return 'resume';
     if (path.includes('/connect')) return 'connect';
-    if (path.includes('/goal/')) return 'galaxy'; // Care plan detail stays on day map
-    return 'galaxy';
+    if (path.includes('/leaderboard')) return 'leaderboard';
+    if (path.includes('/dashboard')) return 'galaxy'; // Day Map view
+    return 'missions'; // default to Care Plans list
   };
 
   // Sync activeNav with URL
@@ -329,7 +330,7 @@ export function AppLayout() {
           onCategorySelect={setSelectedCategory}
         />
         
-        <main className="flex-1 px-4 md:px-6 py-6 relative min-w-0 overflow-y-auto overflow-x-hidden">
+        <main className="flex-1 px-4 md:px-6 py-6 pb-24 md:pb-6 relative min-w-0 overflow-y-auto overflow-x-hidden">
           <Outlet context={{ 
             setSelectedGoalId, 
             missions, 
@@ -344,6 +345,43 @@ export function AppLayout() {
       </div>
 
       <ArcNavigator tasks={allTasksFormatted} userId={currentUser?.id} />
+
+      {/* Mobile bottom navigation — hidden on md+ where sidebar is visible */}
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[var(--bg-space-900)]/95 backdrop-blur-xl border-t border-white/10 safe-area-inset-bottom"
+        aria-label="Mobile navigation"
+      >
+        <div className="flex items-center justify-around px-2 py-2">
+          {([
+            { id: 'missions', label: 'Care Plans', path: '/missions', icon: '📋' },
+            { id: 'timeline', label: 'Calendar', path: '/timeline', icon: '📅' },
+            { id: 'galaxy', label: 'Day Map', path: '/dashboard', icon: '🗺️' },
+            { id: 'connect', label: 'Circle', path: '/connect', icon: '🤝' },
+            { id: 'resume', label: 'Summary', path: '/resume', icon: '📄' },
+          ] as const).map((item) => {
+            const isActive = activeNav === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => navigate(item.path)}
+                aria-label={item.label}
+                aria-current={isActive ? 'page' : undefined}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl min-w-[52px] transition-all ${
+                  isActive
+                    ? 'text-[var(--accent-cyan)] bg-[var(--accent-cyan)]/10'
+                    : 'text-white/60 hover:text-white/90 active:bg-white/5'
+                }`}
+              >
+                <span className="text-lg leading-none" aria-hidden="true">{item.icon}</span>
+                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-[var(--accent-cyan)]' : 'text-white/60'}`}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
       {showLaunchModal && (
         <LaunchMissionModal
